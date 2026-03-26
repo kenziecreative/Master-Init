@@ -1,0 +1,8 @@
+{
+  "name": "knzinit",
+  "description": "Bootstrap projects with a 5-layer memory system, security agents, guardrail hooks, and sanity checks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kelsey Ruger"
+  }
+}
