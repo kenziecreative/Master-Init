@@ -16,12 +16,12 @@ Requirements for knzinit v2 release. Each maps to roadmap phases.
 
 ### Settings
 
-- [ ] **SETT-01**: Generated settings.json includes $schema key for IDE validation (B-23)
-- [ ] **SETT-02**: Generated settings.json includes universal permission deny rules for .env and secrets files regardless of project type (B-30)
-- [ ] **SETT-03**: Generated settings.json varies by project type — code projects get build/test allow rules, non-code projects get includeGitInstructions:false (B-10, B-05)
-- [ ] **SETT-04**: Non-code project settings include keep-coding-instructions:false to disable default programming behavior (B-06)
-- [ ] **SETT-05**: Generated settings.json includes env key with KNZINIT_PROJECT_TYPE and KNZINIT_VERSION for runtime metadata (B-13)
-- [ ] **SETT-06**: Generated settings.json sets plansDirectory to in-project path (.planning/plans) (B-14)
+- [x] **SETT-01**: Generated settings.json includes $schema key for IDE validation (B-23)
+- [x] **SETT-02**: Generated settings.json includes universal permission deny rules for .env and secrets files regardless of project type (B-30)
+- [x] **SETT-03**: Generated settings.json varies by project type — code projects get build/test allow rules, non-code projects get includeGitInstructions:false (B-10, B-05)
+- [x] **SETT-04**: Non-code project settings include keep-coding-instructions:false to disable default programming behavior (B-06)
+- [x] **SETT-05**: Generated settings.json includes env key with KNZINIT_PROJECT_TYPE and KNZINIT_VERSION for runtime metadata (B-13)
+- [x] **SETT-06**: Generated settings.json sets plansDirectory to in-project path (.planning/plans) (B-14)
 
 ### Hooks
 
@@ -87,12 +87,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARCH-02 | Phase 1 | Complete |
 | ARCH-03 | Phase 1 | Complete |
 | ARCH-04 | Phase 1 | Complete |
-| SETT-01 | Phase 2 | Pending |
-| SETT-02 | Phase 2 | Pending |
-| SETT-03 | Phase 2 | Pending |
-| SETT-04 | Phase 2 | Pending |
-| SETT-05 | Phase 2 | Pending |
-| SETT-06 | Phase 2 | Pending |
+| SETT-01 | Phase 2 | Complete |
+| SETT-02 | Phase 2 | Complete |
+| SETT-03 | Phase 2 | Complete |
+| SETT-04 | Phase 2 | Complete |
+| SETT-05 | Phase 2 | Complete |
+| SETT-06 | Phase 2 | Complete |
 | HOOK-01 | Phase 3 | Pending |
 | HOOK-02 | Phase 3 | Pending |
 | HOOK-03 | Phase 3 | Pending |

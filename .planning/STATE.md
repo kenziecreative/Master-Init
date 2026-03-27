@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-27T20:07:23.284Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-27T20:22:47.054Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 5
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  completed_phases: 2
+  total_plans: 3
+  completed_plans: 3
   percent: 0
 ---
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 3 | 3 tasks | 5 files |
 | Phase 01-foundation P02 | 5min | 2 tasks | 3 files |
+| Phase 02-settings P01 | 2min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: SKILL.md headers use lowercase 'instruction system' to match exact grep verify pattern
 - [Phase 01-foundation]: LEARNINGS.md.tmpl deleted (not just dereferenced) to prevent accidental use in v2 scaffold
 - [Phase 01-foundation]: plugin.json bumped to v2.0.0 as single source of truth for version markers
+- [Phase 02-settings]: Single settings.json.tmpl contains all sections (code variant); SKILL.md conditionally adapts for non-code rather than maintaining two templates
+- [Phase 02-settings]: Merge-not-overwrite for every settings section: hooks append, deny/allow union, env adds-only, scalar keys set-if-absent
+- [Phase 02-settings]: Normalized env.KNZINIT_PROJECT_TYPE values: code | noncode | unknown (no spaces or hyphens)
 
 ### Pending Todos
 
@@ -82,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T20:07:23.271Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-settings/02-CONTEXT.md
+Last session: 2026-03-27T20:22:47.051Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
