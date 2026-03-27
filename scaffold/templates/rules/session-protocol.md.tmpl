@@ -1,0 +1,46 @@
+# Session Protocol
+
+Rules for starting and ending sessions to maintain continuity across context
+boundaries.
+
+---
+
+## Session Start
+
+When beginning any session:
+
+1. Read `.planning/STATE.md` — orient to current phase, plan, and open items
+2. Note the "Stopped at" field — this is the precise resume point
+3. If there are open blockers or pending decisions, surface them before proceeding
+4. Check "Recent Decisions" to avoid relitigating resolved choices
+
+Do not begin work until you have read STATE.md and understand where the project
+stands.
+
+## Session End
+
+Before ending any session, update `.planning/STATE.md`:
+
+1. **Stopped at** — exact task or step where work paused (be specific enough that
+   a fresh session can resume without re-reading code)
+2. **Last activity** — one-line summary with today's date
+3. **Recent Decisions** — add any decisions made this session to the table
+4. **Open Items** — add any new TODOs, blockers, or pending questions
+
+The session end update is the continuity handoff. Skipping it means the next
+session starts blind.
+
+## Context Compaction Recovery
+
+If Claude's context compacts mid-session:
+
+1. Re-read `.planning/STATE.md` immediately
+2. Re-orient: current phase, plan, stopped-at point
+3. Resume from the most recent clear checkpoint
+4. Do not assume pre-compaction context is available
+
+STATE.md is the recovery anchor. Keep it accurate.
+
+---
+
+<!-- knzinit v{{VERSION}} -->
