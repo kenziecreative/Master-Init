@@ -30,10 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The generated root CLAUDE.md is under 200 lines, with behavioral detail deferred to .claude/rules/, subdirectory CLAUDE.md files, and skills
   4. Critical behavioral instructions appear in the first third of the generated CLAUDE.md
   5. All generated files include a version marker comment, and the generated CLAUDE.md includes guidance on scope-restricted settings users must configure manually
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Path resolution infrastructure + template rewrites (CLAUDE.md, STATE.md, rules)
+- [ ] 01-02-PLAN.md — SKILL.md orchestrator rewrite + plugin.json v2.0.0
 
 ### Phase 2: Settings
 **Goal**: Generated settings.json provides full project-type coverage — schema validation, security baselines, environment metadata, and project-type-specific permission and behavior rules
@@ -101,7 +102,7 @@ Note: Phases 2, 3, and 4 all depend on Phase 1 but are otherwise independent. De
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/2 | Planning | - |
 | 2. Settings | 0/TBD | Not started | - |
 | 3. Hooks | 0/TBD | Not started | - |
 | 4. Non-Code and Skills | 0/TBD | Not started | - |
