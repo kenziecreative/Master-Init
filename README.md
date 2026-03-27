@@ -133,7 +133,7 @@ Each component is independent. To iterate:
 - **Change what gets scaffolded**: Edit `skills/knzinit/SKILL.md` (the orchestrator logic)
 - **Change template content**: Edit files in `scaffold/templates/`
 - **Change security scanning**: Edit files in `scaffold/agents/`
-- **Change automated guardrails**: Edit files in `scaffold/hooks/` and `scaffold/settings.json`
+- **Change automated guardrails**: Edit files in `scaffold/hooks/` and `scaffold/templates/settings.json.tmpl`
 - **Change health checks**: Edit `scaffold/skills/sanity-check/SKILL.md`
 
 The orchestrator references components via `${CLAUDE_PLUGIN_ROOT}` paths, so the plugin works regardless of where it's installed.
