@@ -25,13 +25,13 @@ Requirements for knzinit v2 release. Each maps to roadmap phases.
 
 ### Hooks
 
-- [ ] **HOOK-01**: PreCompact hook saves current state to STATE.md before compaction (B-07, existing hook refined)
-- [ ] **HOOK-02**: PostCompact hook reads STATE.md after compaction and outputs orientation summary (B-07, new)
+- [x] **HOOK-01**: PreCompact hook saves current state to STATE.md before compaction (B-07, existing hook refined)
+- [x] **HOOK-02**: PostCompact hook reads STATE.md after compaction and outputs orientation summary (B-07, new)
 - [ ] **HOOK-03**: SessionStart hook fires on all four matchers (startup, resume, clear, compact) and reads STATE.md to output session orientation (B-08)
 - [ ] **HOOK-04**: SessionEnd hook captures session summary and appends to session-log.md (B-09)
 - [ ] **HOOK-05**: Generated CLAUDE.md includes 2-3 lines of compaction instructions (preserve task context, re-read STATE.md) (B-11)
-- [ ] **HOOK-06**: All hooks include error handling — trap failures, log to .claude/hook-errors.log, emit clear stderr (B-12)
-- [ ] **HOOK-07**: Hooks that don't depend on git work in non-git projects (B-22)
+- [x] **HOOK-06**: All hooks include error handling — trap failures, log to .claude/hook-errors.log, emit clear stderr (B-12)
+- [x] **HOOK-07**: Hooks that don't depend on git work in non-git projects (B-22)
 
 ### Non-Code
 
@@ -93,13 +93,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETT-04 | Phase 2 | Complete |
 | SETT-05 | Phase 2 | Complete |
 | SETT-06 | Phase 2 | Complete |
-| HOOK-01 | Phase 3 | Pending |
-| HOOK-02 | Phase 3 | Pending |
+| HOOK-01 | Phase 3 | Complete |
+| HOOK-02 | Phase 3 | Complete |
 | HOOK-03 | Phase 3 | Pending |
 | HOOK-04 | Phase 3 | Pending |
 | HOOK-05 | Phase 3 | Pending |
-| HOOK-06 | Phase 3 | Pending |
-| HOOK-07 | Phase 3 | Pending |
+| HOOK-06 | Phase 3 | Complete |
+| HOOK-07 | Phase 3 | Complete |
 | NCODE-01 | Phase 4 | Pending |
 | NCODE-02 | Phase 4 | Pending |
 | NCODE-03 | Phase 4 | Pending |

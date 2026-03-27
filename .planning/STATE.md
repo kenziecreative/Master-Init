@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-27T21:45:52.750Z"
+stopped_at: Completed 03-hooks-03-01-PLAN.md
+last_updated: "2026-03-27T22:01:00.513Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 7
+  completed_plans: 5
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation P02 | 5min | 2 tasks | 3 files |
 | Phase 02-settings P01 | 2min | 2 tasks | 3 files |
 | Phase 02-settings P02 | 1min | 1 tasks | 1 files |
+| Phase 03-hooks P01 | 1min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 02-settings]: Merge-not-overwrite for every settings section: hooks append, deny/allow union, env adds-only, scalar keys set-if-absent
 - [Phase 02-settings]: Normalized env.KNZINIT_PROJECT_TYPE values: code | noncode | unknown (no spaces or hyphens)
 - [Phase 02-settings]: No new decisions — single-line doc fix to align README.md with actual scaffold template path established in 02-01
+- [Phase 03-hooks]: hook-utils.sh is not executable — sourced as library; PROJECT_DIR fallback uses pwd not git rev-parse for non-git project support
+- [Phase 03-hooks]: read_state_field uses awk for section extraction; pre-compact inserts snapshot before knzinit version marker or appends to EOF
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T21:45:52.746Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-hooks/03-CONTEXT.md
+Last session: 2026-03-27T22:01:00.510Z
+Stopped at: Completed 03-hooks-03-01-PLAN.md
+Resume file: None
