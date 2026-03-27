@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-27T20:22:47.054Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-27T20:39:52.250Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 4
+  completed_plans: 4
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation P01 | 3 | 3 tasks | 5 files |
 | Phase 01-foundation P02 | 5min | 2 tasks | 3 files |
 | Phase 02-settings P01 | 2min | 2 tasks | 3 files |
+| Phase 02-settings P02 | 1min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,7 @@ Recent decisions affecting current work:
 - [Phase 02-settings]: Single settings.json.tmpl contains all sections (code variant); SKILL.md conditionally adapts for non-code rather than maintaining two templates
 - [Phase 02-settings]: Merge-not-overwrite for every settings section: hooks append, deny/allow union, env adds-only, scalar keys set-if-absent
 - [Phase 02-settings]: Normalized env.KNZINIT_PROJECT_TYPE values: code | noncode | unknown (no spaces or hyphens)
+- [Phase 02-settings]: No new decisions — single-line doc fix to align README.md with actual scaffold template path established in 02-01
 
 ### Pending Todos
 
@@ -86,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T20:22:47.051Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-27T20:39:52.248Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
