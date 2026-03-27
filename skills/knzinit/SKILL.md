@@ -1,6 +1,6 @@
 ---
 name: knzinit
-description: Bootstrap a new project with 5-layer memory system, security agents, and sanity checks
+description: Bootstrap a new project with two-system architecture (instruction + learning), security agents, and sanity checks
 ---
 
 # /knzinit — Project Scaffolding
@@ -24,6 +24,7 @@ Before creating anything, check what's already in place:
 - Does `CLAUDE.md` exist? (extend, don't replace)
 - Does `.planning/` exist? (extend, don't replace)
 - Does `.claude/` exist with agents, skills, hooks, or settings? (merge, don't overwrite)
+- Does `.claude/rules/` exist? (extend, don't replace)
 - Does `MEMORY.md` exist in the auto-memory directory? (extend, don't replace)
 - What language/framework/package manager is present? (if any code exists)
 - Does the project have existing security tooling? (ESLint security plugins, Semgrep, pre-commit hooks, etc.)
@@ -34,25 +35,53 @@ If anything substantial exists, ask the user how to integrate rather than replac
 
 Create everything below, adapting to the user's answers. If the project type is unknown, build the flexible variant that works for both code and non-code.
 
-### 3A: Five-Layer Memory System
+### Path Resolution
 
-Use the templates in `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/` as starting points. Adapt each to the project's specifics.
+To locate the plugin's templates, use the same logic as `resolve-root.sh`:
 
-**Layer 1 — CLAUDE.md** (always loaded)
+1. If `CLAUDE_PLUGIN_ROOT` is set in the environment, use `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/`
+2. If not set, walk up from the skill file's location looking for a directory containing `scaffold/resolve-root.sh`
+3. As a fallback, check known plugin directories: `~/.claude/plugins/knzinit/`, `~/.config/claude/plugins/knzinit/`
 
-If CLAUDE.md doesn't exist, create it based on `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. Include:
+When running shell commands for path resolution, you may source `resolve-root.sh` directly:
+`. ${CLAUDE_PLUGIN_ROOT}/scaffold/resolve-root.sh`
+This exports `KNZINIT_ROOT`, `KNZINIT_VERSION`, and the `knzinit_version_marker()` function.
+
+**Version markers:** After generating each file from a template, ensure the version marker comment `<!-- knzinit vX.Y.Z -->` is present at the bottom. Read the version from `.claude-plugin/plugin.json` (or use `KNZINIT_VERSION` if resolve-root.sh was sourced).
+
+### 3A: Two-System Architecture
+
+Use the templates in `${KNZINIT_ROOT}/scaffold/templates/` as starting points. Adapt each to the project's specifics.
+
+#### instruction system (static, human-curated)
+
+**CLAUDE.md** (always loaded by Claude Code)
+
+If CLAUDE.md doesn't exist, create it from `${KNZINIT_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. The template uses `{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, and `{{VERSION}}` placeholders — substitute these with the actual values.
 
 - What the project is (use the user's description, however vague)
 - "When Starting a Session" section pointing to STATE.md
 - Auto Memory section with save/prune guidelines
-- Pointers to the other layer files (.planning/STATE.md, .planning/LEARNINGS.md)
+- Pointers to `.planning/STATE.md` and `.claude/rules/`
 - If non-code or no git: add a "Session Discipline" section reminding Claude to update STATE.md before ending sessions
 
 Target: under 200 lines. If the project is brand new and vague, this will be short — that's fine. It grows as the project takes shape.
 
-**Layer 2 — .planning/STATE.md** (read at session start)
+**.claude/rules/** (loaded per-session by Claude Code)
 
-Create based on `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/STATE.md.tmpl` with:
+Generate 1-2 starter rules files based on project type:
+
+- **Code projects:** Copy `rules/session-protocol.md.tmpl` → `.claude/rules/session-protocol.md` AND `rules/conventions.md.tmpl` → `.claude/rules/conventions.md`
+- **Non-code projects:** Copy `rules/session-protocol.md.tmpl` → `.claude/rules/session-protocol.md` only (conventions not relevant)
+- **Not sure yet:** Copy both files (code project pattern — they won't hurt non-code work)
+
+Substitute `{{VERSION}}` in each file with the current version from `plugin.json`. Add the version marker comment at the bottom of each generated file.
+
+#### Learning System (dynamic, session-updated)
+
+**STATE.md** (read at session start)
+
+Create from `${KNZINIT_ROOT}/scaffold/templates/STATE.md.tmpl` with:
 
 - Current position (if new project: "Project initialized. No work completed yet.")
 - Last activity date (today)
@@ -62,33 +91,15 @@ Create based on `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/STATE.md.tmpl` with:
 
 Target: under 60 lines.
 
-**Layer 3 — Auto Memory (MEMORY.md)**
+**Auto Memory (MEMORY.md)**
 
 Write an initial MEMORY.md in the auto-memory directory with what's known so far. If almost nothing is known, that's fine — write what you have and note that it will be populated as the project develops.
-
-**Layer 4 — .planning/LEARNINGS.md**
-
-Create based on `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/LEARNINGS.md.tmpl`.
-
-**Layer 5 — Hooks/Guardrails**
-
-**If git repo (or user chose to init one):**
-
-Install hooks from `${CLAUDE_PLUGIN_ROOT}/scaffold/hooks/`:
-- `pre-compact-check.sh` → `.claude/hooks/pre-compact-check.sh`
-- `milestone-check.sh` → `.claude/hooks/milestone-check.sh`
-
-Register both in `.claude/settings.json` (merge with existing if present) using the pattern in `${CLAUDE_PLUGIN_ROOT}/scaffold/settings.json`.
-
-Make hook scripts executable with `chmod +x`.
-
-**If NOT a git repo and user doesn't want one:** Add the Session Discipline section to CLAUDE.md instead of creating hooks.
 
 ### 3B: Security & Sanity Setup
 
 **Only create security agents if this is a code project or the user is unsure.** If explicitly non-code, skip the security scanner and secrets auditor but still create the sanity check.
 
-Install from `${CLAUDE_PLUGIN_ROOT}/scaffold/`:
+Install from `${KNZINIT_ROOT}/scaffold/`:
 - `agents/security-scanner.md` → `.claude/agents/security-scanner.md`
 - `agents/secrets-env-auditor.md` → `.claude/agents/secrets-env-auditor.md`
 - `hooks/pre-commit-secrets.sh` → `.claude/hooks/pre-commit-secrets.sh` (git repos only)
@@ -98,13 +109,23 @@ Install the sanity check skill:
 
 Adapt each to the project's actual language and framework. If unknown, use the generic versions as-is — they include notes about what to update once the stack is established.
 
+**If git repo (or user chose to init one):**
+
+Install hooks from `${KNZINIT_ROOT}/scaffold/hooks/`:
+- `pre-compact-check.sh` → `.claude/hooks/pre-compact-check.sh`
+- `milestone-check.sh` → `.claude/hooks/milestone-check.sh`
+
+Register both in `.claude/settings.json` (merge with existing if present) using the pattern in `${KNZINIT_ROOT}/scaffold/settings.json`.
+
 Register the pre-commit secrets hook as a PreToolUse hook in `.claude/settings.json` that triggers when a Bash command contains `git commit`.
 
-Make executable with `chmod +x`.
+Make hook scripts executable with `chmod +x`.
+
+**If NOT a git repo and user doesn't want one:** Add the Session Discipline section to CLAUDE.md instead of creating hooks.
 
 ### 3C: .gitignore (if git repo)
 
-Create a `.gitignore` based on `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/gitignore.tmpl` if one doesn't already exist.
+Create a `.gitignore` based on `${KNZINIT_ROOT}/scaffold/templates/gitignore.tmpl` if one doesn't already exist.
 
 If the stack is known, add the appropriate language/framework ignores (node_modules/, __pycache__/, target/, build/, dist/, etc.).
 
@@ -116,6 +137,7 @@ Ensure these directories exist:
 - `.claude/agents/` (if code project or unsure)
 - `.claude/skills/`
 - `.claude/hooks/` (if git repo)
+- `.claude/rules/`
 
 ## Step 4: Merge Settings
 
@@ -140,6 +162,13 @@ Tell the user what was created and what was adapted. Be specific:
 - If anything was left generic (because the project type is unknown), list what should be updated once the stack is established
 - Remind them that `/sanity-check` is available and adaptive
 - Note that this scaffolding works alongside GSD — it won't interfere with GSD's planning structure
+
+After listing the files, show a brief 3-4 line summary of the two-system architecture:
+
+> **Your project now uses a two-system architecture:**
+> - **Instruction system** (static, human-curated): `CLAUDE.md` + `.claude/rules/` — tells Claude how to behave in this project
+> - **Learning system** (dynamic, session-updated): `STATE.md` + auto memory — tracks what's happening and what's been learned
+> These two systems work together: instructions define the framework; the learning system fills it with project-specific context over time.
 
 If the project type was "not sure yet", add:
 
