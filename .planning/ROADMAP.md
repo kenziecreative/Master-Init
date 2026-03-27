@@ -12,7 +12,7 @@ v2 rebuilds knzinit around the platform's actual two-system architecture, expand
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Resolve CLAUDE_PLUGIN_ROOT blocker and restructure CLAUDE.md templates around the two-system architecture
+- [x] **Phase 1: Foundation** - Resolve CLAUDE_PLUGIN_ROOT blocker and restructure CLAUDE.md templates around the two-system architecture (completed 2026-03-27)
 - [ ] **Phase 2: Settings** - Expand generated settings.json from minimal to full platform coverage with project-type variants
 - [ ] **Phase 3: Hooks** - Implement complete session lifecycle with compaction recovery and error handling
 - [ ] **Phase 4: Non-Code and Skills** - Add non-code project templates, differentiated interview flow, and handoff/resume skills
@@ -102,7 +102,7 @@ Note: Phases 2, 3, and 4 all depend on Phase 1 but are otherwise independent. De
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/2 | In Progress|  |
+| 1. Foundation | 2/2 | Complete   | 2026-03-27 |
 | 2. Settings | 0/TBD | Not started | - |
 | 3. Hooks | 0/TBD | Not started | - |
 | 4. Non-Code and Skills | 0/TBD | Not started | - |
