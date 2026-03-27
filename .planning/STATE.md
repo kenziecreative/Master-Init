@@ -1,22 +1,64 @@
-## Current Position
-
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-03-26 — Milestone v1.1 started
+# Project State
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-26)
 
 **Core value:** Every Claude Code session starts oriented and every context boundary recovers gracefully — regardless of project type.
-**Current focus:** Milestone v1.1 — knzinit v2 rebuild
+**Current focus:** Phase 1 — Foundation
+
+## Current Position
+
+Phase: 1 of 5 (Foundation)
+Plan: 0 of TBD in current phase
+Status: Ready to plan
+Last activity: 2026-03-26 — Roadmap created for milestone v1.1
+
+Progress: [░░░░░░░░░░] 0%
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed: 0
+- Average duration: —
+- Total execution time: 0 hours
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
+
+**Recent Trend:**
+- Last 5 plans: none yet
+- Trend: —
+
+*Updated after each plan completion*
 
 ## Accumulated Context
 
-- v1 plugin is working and deployed (plugin.json v1.0.0)
-- 13 audited research outputs available in feature-support/research/outputs/
-- 30 backlog items prioritized (12 P1, 14 P2, 4 P3)
-- Four implementation clusters identified: architectural restructure → settings expansion → session lifecycle hooks → non-code templates
-- Hard blocker: B-29 (CLAUDE_PLUGIN_ROOT verification) — must resolve early
-- 30 open questions, 16 accepted with assumptions, 8 require prototyping, 5 deferred, 1 must resolve before release (Q18/B-29)
+### Decisions
+
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
+
+- [Pre-roadmap]: Replace 5-layer model with two-system architecture (instruction + learning)
+- [Pre-roadmap]: Shift compaction strategy from "prevent" to "recover" — use PostCompact + SessionStart
+- [Pre-roadmap]: Include all P1 + selected P2 backlog items in v2; defer all P3 to v2.1+
+- [Pre-roadmap]: CLAUDE_PLUGIN_ROOT (INFR-01) is a hard blocker — resolve in Phase 1 before anything that depends on template path resolution
+
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+- INFR-01: CLAUDE_PLUGIN_ROOT stability unverified — Phase 1 must either confirm stability or add fallback. Unresolved until Phase 1 executes.
+- SETT-04: keep-coding-instructions:false — moderate stability risk, verify implementation path in Phase 2
+- Q18/B-29: One open question flagged "must resolve before release" — same as INFR-01 blocker above
+
+## Session Continuity
+
+Last session: 2026-03-26
+Stopped at: Roadmap created, ready to plan Phase 1
+Resume file: None
