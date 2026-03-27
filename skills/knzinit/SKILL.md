@@ -109,17 +109,20 @@ Install the sanity check skill:
 
 Adapt each to the project's actual language and framework. If unknown, use the generic versions as-is — they include notes about what to update once the stack is established.
 
-**If git repo (or user chose to init one):**
-
-Install hooks from `${KNZINIT_ROOT}/scaffold/hooks/`:
+**All projects:** Install these hooks from `${KNZINIT_ROOT}/scaffold/hooks/`:
+- `hook-utils.sh` → `.claude/hooks/hook-utils.sh` (shared utility library — not executable, sourced by other hooks)
 - `pre-compact-check.sh` → `.claude/hooks/pre-compact-check.sh`
+- `post-compact-orientation.sh` → `.claude/hooks/post-compact-orientation.sh`
+- `session-start.sh` → `.claude/hooks/session-start.sh`
+- `session-end.sh` → `.claude/hooks/session-end.sh`
+
+**Git projects only (additional):**
 - `milestone-check.sh` → `.claude/hooks/milestone-check.sh`
+- `pre-commit-secrets.sh` → `.claude/hooks/pre-commit-secrets.sh`
 
-Register both in `.claude/settings.json` (merge with existing if present) using the pattern in `${KNZINIT_ROOT}/scaffold/templates/settings.json.tmpl`.
+Register all hooks in `.claude/settings.json` (merge with existing if present) using the pattern in `${KNZINIT_ROOT}/scaffold/templates/settings.json.tmpl`. The template includes PreCompact, PostCompact, SessionStart (4 matchers), SessionEnd, Stop, and PreToolUse registrations.
 
-Register the pre-commit secrets hook as a PreToolUse hook in `.claude/settings.json` that triggers when a Bash command contains `git commit`.
-
-Make hook scripts executable with `chmod +x`.
+Make hook scripts executable with `chmod +x` (include hook-utils.sh for simplicity, even though it is sourced rather than executed directly).
 
 **If NOT a git repo and user doesn't want one:** Add the Session Discipline section to CLAUDE.md instead of creating hooks.
 
