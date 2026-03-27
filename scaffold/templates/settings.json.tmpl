@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      { "filePath": ".env*", "operations": ["Write", "Edit"] },
+      { "filePath": "**/*.pem", "operations": ["Write", "Edit"] },
+      { "filePath": "**/*.key", "operations": ["Write", "Edit"] },
+      { "filePath": "**/*credentials*", "operations": ["Write", "Edit"] },
+      { "filePath": "**/*secret*", "operations": ["Write", "Edit"] },
+      { "filePath": "**/id_rsa*", "operations": ["Write", "Edit"] },
+      { "filePath": "**/id_ed25519*", "operations": ["Write", "Edit"] }
+    ],
+    "allow": [
+      { "command": "npm *" },
+      { "command": "yarn *" },
+      { "command": "pnpm *" },
+      { "command": "bun *" },
+      { "command": "npx *" },
+      { "command": "pytest *" },
+      { "command": "cargo *" },
+      { "command": "go test *" },
+      { "command": "go build *" },
+      { "command": "make *" }
+    ]
+  },
+  "env": {
+    "KNZINIT_PROJECT_TYPE": "code",
+    "KNZINIT_VERSION": "{{VERSION}}"
+  },
+  "plansDirectory": ".planning/plans",
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre-compact-check.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/milestone-check.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre-commit-secrets.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
