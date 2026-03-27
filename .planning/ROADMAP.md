@@ -62,10 +62,12 @@ Plans:
   3. Ending a session appends a structured summary to session-log.md without user prompting
   4. A hook failure does not silently abort — the error appears in .claude/hook-errors.log and in stderr output the user can see
   5. Hooks that exclude git operations work correctly in a project directory that has no .git folder
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md — Shared hook-utils.sh + compaction recovery chain (PreCompact save + PostCompact orientation)
+- [ ] 03-02-PLAN.md — SessionStart + SessionEnd hooks + retrofit existing hooks with error handling
+- [ ] 03-03-PLAN.md — Template registration (settings.json.tmpl, CLAUDE.md.tmpl, SKILL.md)
 
 ### Phase 4: Non-Code and Skills
 **Goal**: Non-code projects (research, writing, strategy, process work) get templates, interview questions, health checks, and STATE.md fields that match their actual workflows, plus handoff and resume skills for all project types
@@ -105,6 +107,6 @@ Note: Phases 2, 3, and 4 all depend on Phase 1 but are otherwise independent. De
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete   | 2026-03-27 |
 | 2. Settings | 1/2 | In progress | - |
-| 3. Hooks | 0/TBD | Not started | - |
+| 3. Hooks | 0/3 | Not started | - |
 | 4. Non-Code and Skills | 0/TBD | Not started | - |
 | 5. Infrastructure | 0/TBD | Not started | - |
