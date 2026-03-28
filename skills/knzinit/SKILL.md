@@ -59,7 +59,7 @@ To locate the plugin's templates, use the same logic as `resolve-root.sh`:
 
 1. If `CLAUDE_PLUGIN_ROOT` is set in the environment, use `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/`
 2. If not set, walk up from the skill file's location looking for a directory containing `scaffold/resolve-root.sh`
-3. As a fallback, check known plugin directories: `~/.claude/plugins/knzinit/`, `~/.config/claude/plugins/knzinit/`
+3. As a fallback, check known plugin directories: `~/.claude/plugins/knzinit/`, `$CLAUDE_PROJECT_DIR/.claude/plugins/knzinit/`
 
 When running shell commands for path resolution, you may source `resolve-root.sh` directly:
 `. ${CLAUDE_PLUGIN_ROOT}/scaffold/resolve-root.sh`
@@ -75,7 +75,7 @@ Use the templates in `${KNZINIT_ROOT}/scaffold/templates/` as starting points. A
 
 **CLAUDE.md** (always loaded by Claude Code)
 
-If CLAUDE.md doesn't exist, create it from `${KNZINIT_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. The template uses `{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, and `{{VERSION}}` placeholders — substitute these with the actual values.
+If CLAUDE.md doesn't exist, create it from `${KNZINIT_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. The template uses `{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, `{{VERSION}}`, and `{{DATE}}` placeholders — substitute these with the actual values. Use today's date in YYYY-MM-DD format for `{{DATE}}`.
 
 **Template adaptation for non-code:** The templates (`CLAUDE.md.tmpl`, `STATE.md.tmpl`) contain conditional sections marked with `<!-- IF code/unknown -->` and `<!-- IF noncode -->` comment markers. When generating output:
 - For **code** or **not sure yet** projects: include only `<!-- IF code/unknown -->` sections, strip all conditional markers
@@ -134,11 +134,11 @@ Install from `${KNZINIT_ROOT}/scaffold/`:
 - `hooks/pre-commit-secrets.sh` → `.claude/hooks/pre-commit-secrets.sh` (git repos only)
 
 Install the sanity check skill:
-- `scaffold/skills/sanity-check/SKILL.md` → `.claude/skills/sanity-check/SKILL.md`
+- `skills/sanity-check/SKILL.md` → `.claude/skills/sanity-check/SKILL.md`
 
 **All projects:** Install handoff and resume skills:
-- `scaffold/skills/handoff/SKILL.md` -> `.claude/skills/handoff/SKILL.md`
-- `scaffold/skills/resume/SKILL.md` -> `.claude/skills/resume/SKILL.md`
+- `skills/handoff/SKILL.md` -> `.claude/skills/handoff/SKILL.md`
+- `skills/resume/SKILL.md` -> `.claude/skills/resume/SKILL.md`
 
 Adapt each to the project's actual language and framework. If unknown, use the generic versions as-is — they include notes about what to update once the stack is established.
 
@@ -172,7 +172,7 @@ Ensure these directories exist:
 - `.planning/security/` (if code project or unsure)
 - `.claude/agents/` (if code project or unsure)
 - `.claude/skills/`
-- `.claude/hooks/` (if git repo)
+- `.claude/hooks/`
 - `.claude/rules/`
 
 ## Step 4: Merge Settings
