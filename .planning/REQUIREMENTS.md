@@ -35,10 +35,10 @@ Requirements for knzinit v2 release. Each maps to roadmap phases.
 
 ### Non-Code
 
-- [ ] **NCODE-01**: Scaffold offers non-code CLAUDE.md templates that encode workflow processes rather than project metadata (B-15)
+- [x] **NCODE-01**: Scaffold offers non-code CLAUDE.md templates that encode workflow processes rather than project metadata (B-15)
 - [ ] **NCODE-02**: Interview asks different questions for non-code projects (workflow, recurring decisions, session patterns, domain terminology) (B-15)
-- [ ] **NCODE-03**: Non-code projects get project-type-appropriate health checks instead of security agents (B-16)
-- [ ] **NCODE-04**: STATE.md template varies by project type with domain-appropriate fields (B-17)
+- [x] **NCODE-03**: Non-code projects get project-type-appropriate health checks instead of security agents (B-16)
+- [x] **NCODE-04**: STATE.md template varies by project type with domain-appropriate fields (B-17)
 
 ### Skills
 
@@ -100,10 +100,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOOK-05 | Phase 3 | Complete |
 | HOOK-06 | Phase 3 | Complete |
 | HOOK-07 | Phase 3 | Complete |
-| NCODE-01 | Phase 4 | Pending |
+| NCODE-01 | Phase 4 | Complete |
 | NCODE-02 | Phase 4 | Pending |
-| NCODE-03 | Phase 4 | Pending |
-| NCODE-04 | Phase 4 | Pending |
+| NCODE-03 | Phase 4 | Complete |
+| NCODE-04 | Phase 4 | Complete |
 | SKIL-01 | Phase 4 | Pending |
 | SKIL-02 | Phase 4 | Pending |
 | INFR-01 | Phase 1 | Complete |

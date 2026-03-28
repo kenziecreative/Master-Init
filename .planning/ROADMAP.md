@@ -110,5 +110,5 @@ Note: Phases 2, 3, and 4 all depend on Phase 1 but are otherwise independent. De
 | 1. Foundation | 2/2 | Complete   | 2026-03-27 |
 | 2. Settings | 1/2 | In progress | - |
 | 3. Hooks | 3/3 | Complete   | 2026-03-27 |
-| 4. Non-Code and Skills | 0/3 | Not started | - |
+| 4. Non-Code and Skills | 2/3 | In Progress|  |
 | 5. Infrastructure | 0/TBD | Not started | - |

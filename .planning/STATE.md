@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-28T01:24:13.741Z"
+stopped_at: Completed 04-02-PLAN.md — /handoff and /resume skills created
+last_updated: "2026-03-28T01:35:00.835Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 10
+  completed_plans: 9
   percent: 0
 ---
 
@@ -57,6 +57,8 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-hooks P01 | 1min | 2 tasks | 3 files |
 | Phase 03-hooks P02 | 2min | 2 tasks | 4 files |
 | Phase 03-hooks P03 | 1min | 2 tasks | 3 files |
+| Phase 04-non-code-and-skills P01 | 5min | 2 tasks | 3 files |
+| Phase 04-non-code-and-skills P02 | 1min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -84,6 +86,11 @@ Recent decisions affecting current work:
 - [Phase 03-hooks]: session-end.sh log cap rebuilds file from header + tail -100 rather than in-place sed to avoid BSD/GNU cross-platform issues
 - [Phase 03-hooks]: SessionStart compact matcher registered in settings.json even though session-start.sh treats it as no-op — ensures hook chain completeness if behavior changes
 - [Phase 03-hooks]: hook-utils.sh, session-start.sh, session-end.sh install for all projects; milestone-check.sh and pre-commit-secrets.sh are git-only
+- [Phase 04-non-code-and-skills]: Conditional markers (IF noncode/code/unknown/ENDIF) serve as orchestrator instructions in templates — SKILL.md strips them and includes only the matching variant (Phase 2 single-template pattern)
+- [Phase 04-non-code-and-skills]: LEARNINGS.md replaced with auto memory (MEMORY.md) in sanity-check to align with v2 two-system architecture
+- [Phase 04-non-code-and-skills]: /handoff writes directly to STATE.md (not a separate file) — single source of truth for session continuity
+- [Phase 04-non-code-and-skills]: /resume is superset of SessionStart hook: hook handles automatic orientation, /resume adds depth on demand
+- [Phase 04-non-code-and-skills]: Both /handoff and /resume are project-type agnostic: same structure works for code, non-code, and unknown
 
 ### Pending Todos
 
@@ -97,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T01:24:13.736Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-non-code-and-skills/04-CONTEXT.md
+Last session: 2026-03-28T01:35:00.832Z
+Stopped at: Completed 04-02-PLAN.md — /handoff and /resume skills created
+Resume file: None
