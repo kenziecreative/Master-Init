@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-02-PLAN.md — /handoff and /resume skills created
-last_updated: "2026-03-28T01:35:00.835Z"
+stopped_at: Completed 04-03-PLAN.md — /knzinit orchestrator updated with non-code branch
+last_updated: "2026-03-28T01:51:31.202Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-hooks P03 | 1min | 2 tasks | 3 files |
 | Phase 04-non-code-and-skills P01 | 5min | 2 tasks | 3 files |
 | Phase 04-non-code-and-skills P02 | 1min | 2 tasks | 2 files |
+| Phase 04-non-code-and-skills P03 | 10min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,8 @@ Recent decisions affecting current work:
 - [Phase 04-non-code-and-skills]: /handoff writes directly to STATE.md (not a separate file) — single source of truth for session continuity
 - [Phase 04-non-code-and-skills]: /resume is superset of SessionStart hook: hook handles automatic orientation, /resume adds depth on demand
 - [Phase 04-non-code-and-skills]: Both /handoff and /resume are project-type agnostic: same structure works for code, non-code, and unknown
+- [Phase 04-non-code-and-skills]: Step 1B skips for code and not-sure-yet — not-sure-yet defaults to code variant (consistent with Phase 2 decision)
+- [Phase 04-non-code-and-skills]: Template adaptation instructions placed in Step 3A after CLAUDE.md creation paragraph; /handoff and /resume installed for all project types in Step 3B
 
 ### Pending Todos
 
@@ -104,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T01:35:00.832Z
-Stopped at: Completed 04-02-PLAN.md — /handoff and /resume skills created
+Last session: 2026-03-28T01:51:31.198Z
+Stopped at: Completed 04-03-PLAN.md — /knzinit orchestrator updated with non-code branch
 Resume file: None
