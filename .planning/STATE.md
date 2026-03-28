@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-28T04:45:46.758Z"
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-28T12:51:34.551Z"
 last_activity: 2026-03-26 — Roadmap created for milestone v1.1
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 13
+  completed_plans: 12
   percent: 0
 ---
 
@@ -61,6 +61,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-non-code-and-skills P02 | 1min | 2 tasks | 2 files |
 | Phase 04-non-code-and-skills P03 | 10min | 1 tasks | 1 files |
 | Phase 05-infrastructure P01 | 2min | 2 tasks | 4 files |
+| Phase 06-audit-gap-closure P01 | 1min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,7 @@ Recent decisions affecting current work:
 - [Phase 05-infrastructure]: .mcp.json generation is yes-only: both no and not-sure-yet skip the file
 - [Phase 05-infrastructure]: decisions-archive.md created unconditionally for every project
 - [Phase 05-infrastructure]: enableAllProjectMcpServers uses existing set-if-absent merge rule (not a new merge strategy)
+- [Phase 06-audit-gap-closure]: README rewritten from scratch rather than patched — too many interlocking stale references for safe incremental patching
 
 ### Pending Todos
 
@@ -112,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T04:45:46.745Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-audit-gap-closure/06-CONTEXT.md
+Last session: 2026-03-28T12:51:34.547Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None
