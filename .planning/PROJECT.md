@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A Claude Code plugin that bootstraps any new project with memory systems, context management, and project structure. v2 rebuilds the scaffold around the platform's actual two-system architecture (instruction system + learning system), expands hook and settings coverage from ~10% to ~60% of the platform surface, and adds first-class non-code project support.
+A Claude Code plugin that bootstraps any project with context management, session lifecycle hooks, and project structure. Built around the platform's two-system architecture (instruction system + learning system), it generates lean CLAUDE.md files with progressive disclosure, full session lifecycle recovery across all context boundaries, and first-class support for both code and non-code projects.
 
 ## Core Value
 
@@ -12,69 +12,64 @@ Every Claude Code session starts oriented and every context boundary (compaction
 
 ### Validated
 
-<!-- Shipped and confirmed valuable in v1. -->
-
-- STATE.md pattern for session continuity — validated by three independent practitioners
-- Interview-based scaffolding — fills gap that /init cannot address for knowledge work
-- Hook-based enforcement for guaranteed behavior
-- Skills for repeatable workflows (skill format stable)
-- Subagents for isolated investigation
+- ✓ Two-system architecture scaffold (instruction + learning systems) — v2.0
+- ✓ Lean root CLAUDE.md under 200 lines with progressive disclosure — v2.0
+- ✓ Three-phase compaction recovery (PreCompact + PostCompact + SessionStart) — v2.0
+- ✓ Project-type-specific settings.json (permissions, env, security baseline) — v2.0
+- ✓ Non-code CLAUDE.md templates with process-encoding content — v2.0
+- ✓ Session lifecycle hooks (SessionStart orientation, SessionEnd logging) — v2.0
+- ✓ /handoff and /resume skills for session continuity — v2.0
+- ✓ CLAUDE_PLUGIN_ROOT stability verified with fallback — v2.0
+- ✓ MCP template generation for external services — v2.0
+- ✓ Decisions archive with overflow warnings — v2.0
+- ✓ Error handling on all hooks with .claude/hook-errors.log — v2.0
+- ✓ Non-git project support (hooks self-guard) — v2.0
+- ✓ STATE.md pattern for session continuity — v1.0
+- ✓ Interview-based scaffolding — v1.0
+- ✓ Hook-based enforcement for guaranteed behavior — v1.0
+- ✓ Skills for repeatable workflows — v1.0
 
 ### Active
 
-<!-- Current scope: v2 milestone. See REQUIREMENTS.md for full breakdown. -->
-
-- [ ] Restructure around two-system architecture (replace 5-layer model)
-- [ ] Lean root CLAUDE.md with progressive disclosure (under 200 lines)
-- [ ] Three-phase compaction recovery (PreCompact + PostCompact + SessionStart)
-- [ ] Project-type-specific settings.json (permissions, env, output styles, security baseline)
-- [ ] Non-code CLAUDE.md templates (process-encoding content for knowledge work)
-- [ ] Session lifecycle hooks (SessionStart orientation, SessionEnd logging)
-- [ ] /handoff and /resume skills
-- [ ] Verify CLAUDE_PLUGIN_ROOT stability (hard blocker)
+- [ ] /knzinit refine (iterative CLAUDE.md improvement) — deferred from v2.0
+- [ ] /knzinit upgrade (version-aware re-scaffolding) — deferred from v2.0
+- [ ] Formal template variable substitution — deferred from v2.0
+- [ ] claudeMdExcludes for monorepo projects — deferred from v2.0
 
 ### Out of Scope
 
-<!-- Explicit boundaries. -->
-
-- /knzinit refine (iterative CLAUDE.md improvement) — P3, defer to v2.1
-- /knzinit upgrade (version-aware re-scaffolding) — P3, depends on version markers shipping first
-- Formal template variable substitution — P3, current approach works without reported failures
-- claudeMdExcludes for monorepos — P3, specification mechanism not fully documented
-- Agent teams hooks — too new, design architecture to accept them later
+- Agent teams hooks (TaskCreated, TaskCompleted, TeammateIdle) — too new, architecture accepts later
 - New interactive /init flow integration — behind feature flag, wait for stable release
-- Plugin marketplace distribution — not elaborated, treat as potentially changing
+- Plugin marketplace distribution — not elaborated, potentially changing
+- AI-specific security patterns (prompt injection, context leakage) — insufficient evidence
+- Context budget monitoring API — platform limitation, no hook/setting exposes utilization
 
 ## Context
 
-**Source material:** 13 audited research outputs in `feature-support/research/outputs/` covering memory architecture, context window economics, hooks, settings, auto-memory, non-code patterns, plugin stability, compaction strategy, blind spots, community practice, and feature backlog. 15 processed sources, 30 backlog items (12 P1, 14 P2, 4 P3).
+**Shipped v2.0** with 12,328 LOC across shell scripts, markdown templates, JSON templates, and skills. Tech stack: Bash (hooks, path resolution), Markdown templates with conditional markers, JSON templates, Claude Code plugin format (SKILL.md orchestrator, plugin.json manifest).
 
-**Key findings driving v2:**
-1. The 5-layer memory model is factually incorrect — platform has two systems (instruction + learning), not five peer layers
-2. knzinit configures 3 of 25 hook events and 1 of 13 settings categories
-3. PreCompact is non-blocking — compaction strategy must shift to "recover after" via PostCompact + SessionStart
-4. Seven sources converge on progressive disclosure: lean root CLAUDE.md with rich supporting files
-5. Non-code projects need different content, not simpler scaffolding
-6. Every line in CLAUDE.md has measurable cost (+20-23% agent steps, instruction-following degrades at scale)
+**Architecture:** Two-system scaffold — instruction system (CLAUDE.md + .claude/rules/) for static behavioral instructions, learning system (STATE.md + auto-memory) for dynamic session state. Generated root CLAUDE.md stays under 200 lines with detail in supporting files.
 
-**Existing codebase:** Working v1 plugin at project root — SKILL.md orchestrator, scaffold/ templates, hooks, agents, settings.json, sanity-check skill. plugin.json manifest at v1.0.0.
+**Session lifecycle:** 6 hook events registered (PreCompact, PostCompact, SessionStart x4 matchers, SessionEnd, Stop, PreToolUse). Compaction recovery shifted from "prevent" to "recover after" via PostCompact + SessionStart orientation.
 
-## Constraints
+**Project types:** Code, non-code, and unknown variants with differentiated templates, interview questions, settings, and health checks. Non-code projects encode workflow processes rather than programming conventions.
 
-- **Platform stability**: Build only on stable platform features (CLAUDE.md hierarchy, .claude/rules/, settings.json, 25 hook events, skill/agent formats). See stability tiers in executive summary.
-- **CLAUDE_PLUGIN_ROOT**: Must verify stability before depending on it (B-29). If unstable, add fallback.
-- **keep-coding-instructions**: Moderate stability risk — confirmed by practitioner usage but output styles config surface not fully documented. Verify implementation path.
-- **CLAUDE.md budget**: Generated root must stay under 200 lines. Every line must pass: (a) can Claude infer this from the project? (b) does this need guaranteed execution? If (a)=yes, cut. If (b)=yes, use a hook.
+**Tech debt (v2.0):** 6 minor documentation/cosmetic items — SKILL.md sentinel mismatch, README directory tree stale entry, duplicate hook install instruction, unconditional git-hook registration, missing SUMMARY frontmatter, misattributed template placeholder. All non-blocking.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Replace 5-layer model with two-system architecture | Platform has two memory systems, not five peer layers. 7+ sources confirm. | — Pending |
-| Shift compaction from "prevent" to "recover" | PreCompact is non-blocking. PostCompact + SessionStart provide actual recovery points. | — Pending |
-| Include all P1 + selected P2 items in v2 | 12 P1 items are must-haves. P2 items (B-09, B-11, B-12, B-13, B-14, B-17, B-18, B-21) add high value at low risk. | — Pending |
-| Defer all P3 items to v2.1+ | Low evidence, speculative, or dependent on emerging features | — Pending |
-| Four implementation clusters mapping to phases | Natural groupings from backlog with clear dependency order | — Pending |
+| Replace 5-layer model with two-system architecture | Platform has two memory systems, not five peer layers. 7+ sources confirm. | ✓ Good |
+| Shift compaction from "prevent" to "recover" | PreCompact is non-blocking. PostCompact + SessionStart provide actual recovery points. | ✓ Good |
+| Include all P1 + selected P2 items in v2 | 12 P1 items are must-haves. P2 items add high value at low risk. | ✓ Good |
+| Defer all P3 items to v2.1+ | Low evidence, speculative, or dependent on emerging features | ✓ Good |
+| Single settings.json.tmpl with conditional adaptation | One template with SKILL.md conditionals vs maintaining two separate templates | ✓ Good |
+| Merge-not-overwrite for settings sections | Hooks append, deny/allow union, env adds-only, scalar keys set-if-absent | ✓ Good |
+| resolve-root.sh with CLAUDE_PLUGIN_ROOT fallback | Walk-up to .claude-plugin/plugin.json if env var missing. Avoids jq dependency. | ✓ Good |
+| /handoff writes directly to STATE.md | Single source of truth for session state, not a separate handoff file | ✓ Good |
+| README rewrite from scratch for v2 | Too many interlocking stale references for safe incremental patching | ✓ Good |
+| Conditional markers as orchestrator instructions | SKILL.md strips IF/ENDIF markers and includes only matching variant | ✓ Good |
 
 ---
-*Last updated: 2026-03-26 after milestone v1.1 initialization*
+*Last updated: 2026-03-28 after v2.0 milestone*
