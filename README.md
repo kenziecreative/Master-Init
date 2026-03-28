@@ -6,6 +6,14 @@ It scaffolds two systems that work together: an **instruction system** (CLAUDE.m
 
 On top of that foundation, knzinit installs **session lifecycle hooks** — shell scripts that fire automatically when sessions start, end, or lose context to compaction, so Claude always picks up where it left off without the user re-explaining anything. It also includes an **adaptive health check** that only tests what actually exists in the project (build, tests, docs, security) and skips everything else, so it's safe to run from day one.
 
+## Code and Non-Code Projects
+
+Not every project is a codebase. Research projects, writing projects, strategy work, and process design all benefit from session continuity and structured state — but they don't need linters, security scanners, or build commands.
+
+knzinit handles this by adapting at scaffold time. The interview asks different questions depending on project type: code projects get asked about tech stack, frameworks, and testing; non-code projects get asked about workflow patterns, recurring decisions, and domain terminology. From there, every generated file adjusts — CLAUDE.md encodes workflow processes instead of programming conventions, STATE.md tracks documents and stakeholders instead of branches and dependencies, and the health check skips code-specific checks entirely.
+
+If the project type isn't clear yet, knzinit scaffolds the flexible variant (code pattern) that self-activates as the project takes shape.
+
 ## Plugin Structure
 
 This follows the current Claude Code plugin conventions — skills (not commands), `SKILL.md` files in named directories, and a `.claude-plugin/plugin.json` manifest.
