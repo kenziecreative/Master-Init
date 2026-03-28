@@ -13,10 +13,11 @@ v2 rebuilds knzinit around the platform's actual two-system architecture, expand
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Resolve CLAUDE_PLUGIN_ROOT blocker and restructure CLAUDE.md templates around the two-system architecture (completed 2026-03-27)
-- [ ] **Phase 2: Settings** - Expand generated settings.json from minimal to full platform coverage with project-type variants
+- [x] **Phase 2: Settings** - Expand generated settings.json from minimal to full platform coverage with project-type variants (completed 2026-03-27)
 - [x] **Phase 3: Hooks** - Implement complete session lifecycle with compaction recovery and error handling (completed 2026-03-27)
-- [ ] **Phase 4: Non-Code and Skills** - Add non-code project templates, differentiated interview flow, and handoff/resume skills
+- [x] **Phase 4: Non-Code and Skills** - Add non-code project templates, differentiated interview flow, and handoff/resume skills (completed 2026-03-28)
 - [x] **Phase 5: Infrastructure** - Add MCP template generation and decisions archive with sanity-check integration (completed 2026-03-28)
+- [ ] **Phase 6: Audit Gap Closure** - Fix documentation inconsistencies, SKILL.md instruction gaps, and template polish from v2.0 milestone audit
 
 ## Phase Details
 
@@ -98,17 +99,35 @@ Plans:
 Plans:
 - [ ] 05-01-PLAN.md — MCP template generation + decisions archive scaffolding + sanity-check overflow warning
 
+### Phase 6: Audit Gap Closure
+**Goal**: Fix all documentation inconsistencies, SKILL.md instruction gaps, and template polish issues identified in the v2.0 milestone audit
+**Depends on**: Phases 1-5 (all complete)
+**Gap Closure**: Closes INT-01 through INT-09, FLOW-B, FLOW-C from v2.0-MILESTONE-AUDIT.md
+**Success Criteria** (what must be TRUE):
+  1. README.md describes the two-system architecture, not the 5-layer model — no references to LEARNINGS.md, scaffold/settings.json, or 5-layer terminology
+  2. SKILL.md Step 3D creates .claude/hooks/ for all projects that receive session hooks, not only git repos
+  3. SKILL.md includes explicit {{DATE}} substitution instruction alongside existing {{PROJECT_NAME}}, {{VERSION}} instructions
+  4. SKILL.md Step 3B skill install paths are consistent with the established ${KNZINIT_ROOT}/scaffold/ base (no redundant scaffold/ prefix)
+  5. settings.json.tmpl SessionEnd registration passes a meaningful argument to session-end.sh (or documents why "unknown" is intentional)
+  6. session-protocol.md.tmpl field references match actual STATE.md.tmpl section headings
+  7. resolve-root.sh fallback paths and SKILL.md documentation are aligned
+  8. pre-commit-secrets.sh comment accurately describes its trigger behavior
+  9. mcp.json.tmpl uses a version marker format consistent with all other templates
+**Plans**: TBD
+
+Plans:
+- [ ] 06-01-PLAN.md — TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
-
-Note: Phases 2, 3, and 4 all depend on Phase 1 but are otherwise independent. Default execution order is sequential; phases 2-4 could parallelize if needed.
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/2 | Complete   | 2026-03-27 |
-| 2. Settings | 1/2 | In progress | - |
-| 3. Hooks | 3/3 | Complete   | 2026-03-27 |
-| 4. Non-Code and Skills | 2/3 | In Progress|  |
-| 5. Infrastructure | 1/1 | Complete   | 2026-03-28 |
+| 1. Foundation | 2/2 | Complete | 2026-03-27 |
+| 2. Settings | 2/2 | Complete | 2026-03-27 |
+| 3. Hooks | 3/3 | Complete | 2026-03-27 |
+| 4. Non-Code and Skills | 3/3 | Complete | 2026-03-28 |
+| 5. Infrastructure | 1/1 | Complete | 2026-03-28 |
+| 6. Audit Gap Closure | 0/? | Pending | - |
