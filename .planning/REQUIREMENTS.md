@@ -42,8 +42,8 @@ Requirements for knzinit v2 release. Each maps to roadmap phases.
 
 ### Skills
 
-- [ ] **SKIL-01**: /handoff skill captures current session state to STATE.md with structured summary (what done, in progress, next, open questions) (B-18)
-- [ ] **SKIL-02**: /resume skill reads STATE.md + recent changes and outputs session orientation summary (B-18)
+- [x] **SKIL-01**: /handoff skill captures current session state to STATE.md with structured summary (what done, in progress, next, open questions) (B-18)
+- [x] **SKIL-02**: /resume skill reads STATE.md + recent changes and outputs session orientation summary (B-18)
 
 ### Infrastructure
 
@@ -104,8 +104,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NCODE-02 | Phase 4 | Pending |
 | NCODE-03 | Phase 4 | Complete |
 | NCODE-04 | Phase 4 | Complete |
-| SKIL-01 | Phase 4 | Pending |
-| SKIL-02 | Phase 4 | Pending |
+| SKIL-01 | Phase 4 | Complete |
+| SKIL-02 | Phase 4 | Complete |
 | INFR-01 | Phase 1 | Complete |
 | INFR-02 | Phase 1 | Complete |
 | INFR-03 | Phase 5 | Pending |
