@@ -50,7 +50,7 @@ If the project type isn't clear yet, trailhead scaffolds the flexible variant (c
 This follows the current Claude Code plugin conventions — skills (not commands), `SKILL.md` files in named directories, and a `.claude-plugin/plugin.json` manifest.
 
 ```
-init-agent/
+trailhead/
 ├── .claude-plugin/
 │   └── plugin.json                              # Plugin manifest
 ├── skills/
@@ -91,7 +91,7 @@ init-agent/
 
 ## What It Does
 
-trailhead sets up the infrastructure that keeps a project healthy across sessions. It's supplemental — it works alongside orchestrators like GSD, not as a replacement. Its job is to catch what falls through the cracks: security issues, exposed secrets, documentation drift, and lost context between sessions.
+trailhead sets up the infrastructure that keeps a project healthy across sessions. It's supplemental — it works alongside your existing workflow, not as a replacement. Its job is to catch what falls through the cracks: security issues, exposed secrets, documentation drift, and lost context between sessions.
 
 ## Where It Fits
 
@@ -111,7 +111,7 @@ The main skill. Walks the user through orientation questions, explores what alre
 
 ### `/sanity-check` — Project Health Check
 
-An adaptive health check that only checks what exists — safe to run on brand new projects.
+An adaptive health check that only checks what exists — safe to run on brand new projects. Tool-restricted to read-only operations so it can't accidentally modify your project while inspecting it.
 
 - **Code Health**: Runs build/type-check, test suite, linter, and scans for debug artifacts (console.log/print, TODO/FIXME/HACK, hardcoded localhost, hardcoded user paths). Skipped if no code exists yet.
 - **Documentation Currency**: Verifies STATE.md and CLAUDE.md are current. Updates stale files.
@@ -123,11 +123,11 @@ Output is a pass/skip/fail summary table. If anything fails, it fixes the issues
 
 ### `/handoff` — Session State Capture
 
-Writes current session state directly to STATE.md for continuity. Captures decisions made, work completed, and next steps so the next session starts oriented.
+Writes current session state directly to STATE.md for continuity. Captures decisions made, work completed, and next steps so the next session starts oriented. Tool-restricted to Read, Write, and Edit — it only touches STATE.md.
 
 ### `/resume` — Session Orientation
 
-Reads STATE.md and outputs a structured orientation summary. A superset of the automatic session-start hook — adds depth on demand when resuming after a break.
+Loads STATE.md automatically and outputs a structured orientation summary. A superset of the automatic session-start hook — adds depth on demand when resuming after a break. Tool-restricted to read-only operations.
 
 ## What It Scaffolds Into Target Projects
 
