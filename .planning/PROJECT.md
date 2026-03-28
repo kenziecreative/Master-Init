@@ -1,4 +1,4 @@
-# knzinit v2
+# trailhead v2
 
 ## What This Is
 
@@ -31,8 +31,8 @@ Every Claude Code session starts oriented and every context boundary (compaction
 
 ### Active
 
-- [ ] /knzinit refine (iterative CLAUDE.md improvement) — deferred from v2.0
-- [ ] /knzinit upgrade (version-aware re-scaffolding) — deferred from v2.0
+- [ ] /trailhead refine (iterative CLAUDE.md improvement) — deferred from v2.0
+- [ ] /trailhead upgrade (version-aware re-scaffolding) — deferred from v2.0
 - [ ] Formal template variable substitution — deferred from v2.0
 - [ ] claudeMdExcludes for monorepo projects — deferred from v2.0
 

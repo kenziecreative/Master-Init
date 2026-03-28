@@ -43,12 +43,12 @@ $MODIFIED_DISPLAY
 $COMMITS_DISPLAY"
 
 # Append snapshot to STATE.md — insert before version marker if present, else append
-if grep -q '<!-- knzinit' "$STATE_FILE"; then
+if grep -q '<!-- trailhead' "$STATE_FILE"; then
   # Use a temp file to insert before the version marker line
   TMPFILE="$(mktemp)"
   # Write all lines before the marker, then snapshot, then the marker line
   awk -v snap="$SNAPSHOT" '
-    /^<!-- knzinit/ { print snap; print; next }
+    /^<!-- trailhead/ { print snap; print; next }
     { print }
   ' "$STATE_FILE" > "$TMPFILE"
   mv "$TMPFILE" "$STATE_FILE"

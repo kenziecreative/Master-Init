@@ -1,18 +1,18 @@
-# knzinit — Project Scaffolding Plugin
+# trailhead — Project Scaffolding Plugin
 
 A Claude Code plugin that bootstraps any new project — code, non-code, or undecided — with the files and automation needed to keep Claude effective across sessions.
 
 It scaffolds two systems that work together: an **instruction system** (CLAUDE.md, rules files) that tells Claude how to behave in this project, and a **learning system** (STATE.md, auto-memory) that tracks what's happening so context survives between sessions. The instruction system is static and human-curated; the learning system evolves every session.
 
-On top of that foundation, knzinit installs **session lifecycle hooks** — shell scripts that fire automatically when sessions start, end, or lose context to compaction, so Claude always picks up where it left off without the user re-explaining anything. It also includes an **adaptive health check** that only tests what actually exists in the project (build, tests, docs, security) and skips everything else, so it's safe to run from day one.
+On top of that foundation, trailhead installs **session lifecycle hooks** — shell scripts that fire automatically when sessions start, end, or lose context to compaction, so Claude always picks up where it left off without the user re-explaining anything. It also includes an **adaptive health check** that only tests what actually exists in the project (build, tests, docs, security) and skips everything else, so it's safe to run from day one.
 
 ## Code and Non-Code Projects
 
 Not every project is a codebase. Research projects, writing projects, strategy work, and process design all benefit from session continuity and structured state — but they don't need linters, security scanners, or build commands.
 
-knzinit handles this by adapting at scaffold time. The interview asks different questions depending on project type: code projects get asked about tech stack, frameworks, and testing; non-code projects get asked about workflow patterns, recurring decisions, and domain terminology. From there, every generated file adjusts — CLAUDE.md encodes workflow processes instead of programming conventions, STATE.md tracks documents and stakeholders instead of branches and dependencies, and the health check skips code-specific checks entirely.
+trailhead handles this by adapting at scaffold time. The interview asks different questions depending on project type: code projects get asked about tech stack, frameworks, and testing; non-code projects get asked about workflow patterns, recurring decisions, and domain terminology. From there, every generated file adjusts — CLAUDE.md encodes workflow processes instead of programming conventions, STATE.md tracks documents and stakeholders instead of branches and dependencies, and the health check skips code-specific checks entirely.
 
-If the project type isn't clear yet, knzinit scaffolds the flexible variant (code pattern) that self-activates as the project takes shape.
+If the project type isn't clear yet, trailhead scaffolds the flexible variant (code pattern) that self-activates as the project takes shape.
 
 ## Plugin Structure
 
@@ -23,7 +23,7 @@ init-agent/
 ├── .claude-plugin/
 │   └── plugin.json                              # Plugin manifest
 ├── skills/
-│   └── knzinit/
+│   └── trailhead/
 │       └── SKILL.md                             # Main orchestrator skill
 ├── scaffold/                                    # ALL installable payload lives here
 │   ├── agents/
@@ -60,21 +60,21 @@ init-agent/
 
 ## What It Does
 
-knzinit sets up the infrastructure that keeps a project healthy across sessions. It's supplemental — it works alongside orchestrators like GSD, not as a replacement. Its job is to catch what falls through the cracks: security issues, exposed secrets, documentation drift, and lost context between sessions.
+trailhead sets up the infrastructure that keeps a project healthy across sessions. It's supplemental — it works alongside orchestrators like GSD, not as a replacement. Its job is to catch what falls through the cracks: security issues, exposed secrets, documentation drift, and lost context between sessions.
 
 ## Where It Fits
 
-knzinit is step 4 in the project lifecycle pipeline:
+trailhead is step 4 in the project lifecycle pipeline:
 
 ```
-Research → Generate PRD → Design → /knzinit → Start Project → Build
+Research → Generate PRD → Design → /trailhead → Start Project → Build
 ```
 
-By the time knzinit runs, the product is defined and designed. knzinit scaffolds the build environment so the project can focus on execution.
+By the time trailhead runs, the product is defined and designed. trailhead scaffolds the build environment so the project can focus on execution.
 
 ## Skills
 
-### `/knzinit` — Project Bootstrap
+### `/trailhead` — Project Bootstrap
 
 The main skill. Walks the user through orientation questions, explores what already exists in the project, then creates the full scaffolding adapted to the project type. Invoked manually when starting a new project.
 
@@ -100,11 +100,11 @@ Reads STATE.md and outputs a structured orientation summary. A superset of the a
 
 ## What It Scaffolds Into Target Projects
 
-When `/knzinit` runs in a target project, it creates:
+When `/trailhead` runs in a target project, it creates:
 
 ### Two-System Architecture
 
-knzinit scaffolds two systems that work together: a static instruction system that tells Claude how to behave, and a dynamic learning system that tracks what's happening.
+trailhead scaffolds two systems that work together: a static instruction system that tells Claude how to behave, and a dynamic learning system that tracks what's happening.
 
 #### Instruction System (static, human-curated)
 
@@ -172,7 +172,7 @@ Scans staged files for common secret patterns — Stripe keys (sk_live_, sk_test
 
 ## Adaptive Behavior
 
-knzinit adapts to four combinations of project type and git status:
+trailhead adapts to four combinations of project type and git status:
 
 | Project Type | Instruction System | Learning System | Hooks | Security | Skills |
 |-------------|-------------------|-----------------|-------|----------|--------|
@@ -181,13 +181,13 @@ knzinit adapts to four combinations of project type and git status:
 | **Non-code + Git** | CLAUDE.md + rules (non-code variant) | STATE.md + auto memory | Session + git hooks | Skipped | All skills (non-code sanity check) |
 | **Non-code, no Git** | CLAUDE.md + rules (non-code variant) | STATE.md + auto memory | Session hooks only | Skipped | All skills (non-code sanity check) |
 
-When the project type is "not sure yet", knzinit builds the flexible variant (code pattern) that self-activates as the stack is established.
+When the project type is "not sure yet", trailhead builds the flexible variant (code pattern) that self-activates as the stack is established.
 
 ## Extending
 
 Each component is independent. To iterate:
 
-- **Change what gets scaffolded**: Edit `skills/knzinit/SKILL.md` (the orchestrator logic)
+- **Change what gets scaffolded**: Edit `skills/trailhead/SKILL.md` (the orchestrator logic)
 - **Change template content**: Edit files in `scaffold/templates/`
 - **Change security scanning**: Edit files in `scaffold/agents/`
 - **Change automated guardrails**: Edit files in `scaffold/hooks/` and `scaffold/templates/settings.json.tmpl`

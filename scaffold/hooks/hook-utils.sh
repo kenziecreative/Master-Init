@@ -1,5 +1,5 @@
 #!/bin/bash
-# hook-utils.sh — Shared utility library for all knzinit hooks.
+# hook-utils.sh — Shared utility library for all trailhead hooks.
 # Source this file at the top of every hook script:
 #
 #   source "$(dirname "$0")/hook-utils.sh"

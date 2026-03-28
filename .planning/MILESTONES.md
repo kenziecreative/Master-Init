@@ -20,7 +20,7 @@
 - Requirements: 28/28 satisfied
 - Tech debt: 6 minor doc/cosmetic items (non-blocking)
 
-**Delivered:** knzinit v2 — every Claude Code session starts oriented and every context boundary recovers gracefully, regardless of project type.
+**Delivered:** trailhead v2 — every Claude Code session starts oriented and every context boundary recovers gracefully, regardless of project type.
 
 ---
 

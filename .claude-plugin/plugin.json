@@ -1,5 +1,5 @@
 {
-  "name": "knzinit",
+  "name": "trailhead",
   "description": "Bootstrap projects with two-system architecture (instruction + learning), security agents, guardrail hooks, and sanity checks",
   "version": "2.0.0",
   "author": {

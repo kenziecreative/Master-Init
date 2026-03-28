@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 # resolve-root.sh
-# Source this file to get KNZINIT_ROOT and KNZINIT_VERSION exports.
+# Source this file to get TRAILHEAD_ROOT and TRAILHEAD_VERSION exports.
 #
 # Usage:
 #   source "$(dirname "${BASH_SOURCE[0]}")/resolve-root.sh"
 #
 # After sourcing, the following are available:
-#   KNZINIT_ROOT     — absolute path to the knzinit plugin root directory
-#   KNZINIT_VERSION  — version string read from .claude-plugin/plugin.json
-#   knzinit_version_marker — function that returns the HTML version comment
+#   TRAILHEAD_ROOT     — absolute path to the trailhead plugin root directory
+#   TRAILHEAD_VERSION  — version string read from .claude-plugin/plugin.json
+#   trailhead_version_marker — function that returns the HTML version comment
 
-_knzinit_resolve_root() {
+_trailhead_resolve_root() {
   local candidate
 
   # 1. Prefer CLAUDE_PLUGIN_ROOT if set and the directory exists
@@ -36,8 +36,8 @@ _knzinit_resolve_root() {
 
   # 3. Try known plugin install locations
   local known_dirs=(
-    "${HOME}/.claude/plugins/knzinit"
-    "${CLAUDE_PROJECT_DIR:-}/.claude/plugins/knzinit"
+    "${HOME}/.claude/plugins/trailhead"
+    "${CLAUDE_PROJECT_DIR:-}/.claude/plugins/trailhead"
   )
   for dir in "${known_dirs[@]}"; do
     if [[ -n "${dir}" && -d "${dir}" && -f "${dir}/.claude-plugin/plugin.json" ]]; then
@@ -47,22 +47,22 @@ _knzinit_resolve_root() {
   done
 
   # 4. All resolution strategies exhausted
-  echo "resolve-root.sh: ERROR: Cannot locate knzinit plugin root." >&2
+  echo "resolve-root.sh: ERROR: Cannot locate trailhead plugin root." >&2
   echo "  Set CLAUDE_PLUGIN_ROOT to the plugin directory, or ensure this" >&2
   echo "  script is located inside the plugin directory tree." >&2
   return 1
 }
 
-# Resolve and export KNZINIT_ROOT
-KNZINIT_ROOT="$(_knzinit_resolve_root)"
+# Resolve and export TRAILHEAD_ROOT
+TRAILHEAD_ROOT="$(_trailhead_resolve_root)"
 if [[ $? -ne 0 ]]; then
   return 1 2>/dev/null || exit 1
 fi
-export KNZINIT_ROOT
+export TRAILHEAD_ROOT
 
 # Read version from plugin.json (no jq dependency — use grep/sed)
-_knzinit_read_version() {
-  local plugin_json="${KNZINIT_ROOT}/.claude-plugin/plugin.json"
+_trailhead_read_version() {
+  local plugin_json="${TRAILHEAD_ROOT}/.claude-plugin/plugin.json"
   if [[ ! -f "${plugin_json}" ]]; then
     echo "unknown"
     return 0
@@ -71,13 +71,13 @@ _knzinit_read_version() {
   grep '"version"' "${plugin_json}" | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/'
 }
 
-KNZINIT_VERSION="$(_knzinit_read_version)"
-export KNZINIT_VERSION
+TRAILHEAD_VERSION="$(_trailhead_read_version)"
+export TRAILHEAD_VERSION
 
 # Helper function: returns the HTML version marker comment
-knzinit_version_marker() {
-  echo "<!-- knzinit v${KNZINIT_VERSION} -->"
+trailhead_version_marker() {
+  echo "<!-- trailhead v${TRAILHEAD_VERSION} -->"
 }
 
 # Clean up internal helpers from the shell namespace
-unset -f _knzinit_resolve_root _knzinit_read_version
+unset -f _trailhead_resolve_root _trailhead_read_version

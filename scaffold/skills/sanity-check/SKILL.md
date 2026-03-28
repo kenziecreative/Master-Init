@@ -11,7 +11,7 @@ Run this to verify the project is in a clean, consistent state. This check adapt
 
 ### 1. Project Health
 
-**Detect project type:** Read `KNZINIT_PROJECT_TYPE` from `.claude/settings.json` env block. If missing or set to `code`/`unknown`, use code behavior. If set to `noncode`, use non-code behavior.
+**Detect project type:** Read `TRAILHEAD_PROJECT_TYPE` from `.claude/settings.json` env block. If missing or set to `code`/`unknown`, use code behavior. If set to `noncode`, use non-code behavior.
 
 **Code projects (code/unknown/missing):**
 - **Compilation/type check**: Run the project's build or type-check command

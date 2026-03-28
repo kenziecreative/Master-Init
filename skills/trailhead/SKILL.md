@@ -1,9 +1,9 @@
 ---
-name: knzinit
+name: trailhead
 description: Bootstrap a new project with two-system architecture (instruction + learning), security agents, and sanity checks
 ---
 
-# /knzinit — Project Scaffolding
+# /trailhead — Project Scaffolding
 
 You are setting up the standard project infrastructure for a new project. This scaffolding is supplemental — it works alongside orchestrators like GSD, not as a replacement. Its purpose is to catch what falls through the cracks: security issues, exposed secrets, documentation drift, and lost context between sessions.
 
@@ -59,23 +59,23 @@ To locate the plugin's templates, use the same logic as `resolve-root.sh`:
 
 1. If `CLAUDE_PLUGIN_ROOT` is set in the environment, use `${CLAUDE_PLUGIN_ROOT}/scaffold/templates/`
 2. If not set, walk up from the skill file's location looking for a directory containing `scaffold/resolve-root.sh`
-3. As a fallback, check known plugin directories: `~/.claude/plugins/knzinit/`, `$CLAUDE_PROJECT_DIR/.claude/plugins/knzinit/`
+3. As a fallback, check known plugin directories: `~/.claude/plugins/trailhead/`, `$CLAUDE_PROJECT_DIR/.claude/plugins/trailhead/`
 
 When running shell commands for path resolution, you may source `resolve-root.sh` directly:
 `. ${CLAUDE_PLUGIN_ROOT}/scaffold/resolve-root.sh`
-This exports `KNZINIT_ROOT`, `KNZINIT_VERSION`, and the `knzinit_version_marker()` function.
+This exports `TRAILHEAD_ROOT`, `TRAILHEAD_VERSION`, and the `trailhead_version_marker()` function.
 
-**Version markers:** After generating each file from a template, ensure the version marker comment `<!-- knzinit vX.Y.Z -->` is present at the bottom. Read the version from `.claude-plugin/plugin.json` (or use `KNZINIT_VERSION` if resolve-root.sh was sourced).
+**Version markers:** After generating each file from a template, ensure the version marker comment `<!-- trailhead vX.Y.Z -->` is present at the bottom. Read the version from `.claude-plugin/plugin.json` (or use `TRAILHEAD_VERSION` if resolve-root.sh was sourced).
 
 ### 3A: Two-System Architecture
 
-Use the templates in `${KNZINIT_ROOT}/scaffold/templates/` as starting points. Adapt each to the project's specifics.
+Use the templates in `${TRAILHEAD_ROOT}/scaffold/templates/` as starting points. Adapt each to the project's specifics.
 
 #### instruction system (static, human-curated)
 
 **CLAUDE.md** (always loaded by Claude Code)
 
-If CLAUDE.md doesn't exist, create it from `${KNZINIT_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. The template uses `{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, `{{VERSION}}`, and `{{DATE}}` placeholders — substitute these with the actual values. Use today's date in YYYY-MM-DD format for `{{DATE}}`.
+If CLAUDE.md doesn't exist, create it from `${TRAILHEAD_ROOT}/scaffold/templates/CLAUDE.md.tmpl`. If it does, extend it. The template uses `{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, `{{VERSION}}`, and `{{DATE}}` placeholders — substitute these with the actual values. Use today's date in YYYY-MM-DD format for `{{DATE}}`.
 
 **Template adaptation for non-code:** The templates (`CLAUDE.md.tmpl`, `STATE.md.tmpl`) contain conditional sections marked with `<!-- IF code/unknown -->` and `<!-- IF noncode -->` comment markers. When generating output:
 - For **code** or **not sure yet** projects: include only `<!-- IF code/unknown -->` sections, strip all conditional markers
@@ -106,7 +106,7 @@ Substitute `{{VERSION}}` in each file with the current version from `plugin.json
 
 **STATE.md** (read at session start)
 
-Create from `${KNZINIT_ROOT}/scaffold/templates/STATE.md.tmpl` with:
+Create from `${TRAILHEAD_ROOT}/scaffold/templates/STATE.md.tmpl` with:
 
 - Current position (if new project: "Project initialized. No work completed yet.")
 - Last activity date (today)
@@ -116,19 +116,19 @@ Create from `${KNZINIT_ROOT}/scaffold/templates/STATE.md.tmpl` with:
 
 Target: under 60 lines.
 
-**decisions-archive.md** — Create from `${KNZINIT_ROOT}/scaffold/templates/decisions-archive.md.tmpl` in `.planning/decisions-archive.md`. Scaffolded for every project. Substitute `{{VERSION}}` with the current version.
+**decisions-archive.md** — Create from `${TRAILHEAD_ROOT}/scaffold/templates/decisions-archive.md.tmpl` in `.planning/decisions-archive.md`. Scaffolded for every project. Substitute `{{VERSION}}` with the current version.
 
 **Auto Memory (MEMORY.md)**
 
 Write an initial MEMORY.md in the auto-memory directory with what's known so far. If almost nothing is known, that's fine — write what you have and note that it will be populated as the project develops.
 
-**.mcp.json** (conditional) — If the user answered "yes" to the external services question (Step 1, Q4), create `.mcp.json` in the project root from `${KNZINIT_ROOT}/scaffold/templates/mcp.json.tmpl`. Substitute `{{VERSION}}` with the current version. If the user answered "no" or "not sure yet", skip this file.
+**.mcp.json** (conditional) — If the user answered "yes" to the external services question (Step 1, Q4), create `.mcp.json` in the project root from `${TRAILHEAD_ROOT}/scaffold/templates/mcp.json.tmpl`. Substitute `{{VERSION}}` with the current version. If the user answered "no" or "not sure yet", skip this file.
 
 ### 3B: Security & Sanity Setup
 
 **Only create security agents if this is a code project or the user is unsure.** If explicitly non-code, skip the security scanner and secrets auditor but still create the sanity check.
 
-Install from `${KNZINIT_ROOT}/scaffold/`:
+Install from `${TRAILHEAD_ROOT}/scaffold/`:
 - `agents/security-scanner.md` → `.claude/agents/security-scanner.md`
 - `agents/secrets-env-auditor.md` → `.claude/agents/secrets-env-auditor.md`
 - `hooks/pre-commit-secrets.sh` → `.claude/hooks/pre-commit-secrets.sh` (git repos only)
@@ -142,7 +142,7 @@ Install the sanity check skill:
 
 Adapt each to the project's actual language and framework. If unknown, use the generic versions as-is — they include notes about what to update once the stack is established.
 
-**All projects:** Install these hooks from `${KNZINIT_ROOT}/scaffold/hooks/`:
+**All projects:** Install these hooks from `${TRAILHEAD_ROOT}/scaffold/hooks/`:
 - `hook-utils.sh` → `.claude/hooks/hook-utils.sh` (shared utility library — not executable, sourced by other hooks)
 - `pre-compact-check.sh` → `.claude/hooks/pre-compact-check.sh`
 - `post-compact-orientation.sh` → `.claude/hooks/post-compact-orientation.sh`
@@ -153,7 +153,7 @@ Adapt each to the project's actual language and framework. If unknown, use the g
 - `milestone-check.sh` → `.claude/hooks/milestone-check.sh`
 - `pre-commit-secrets.sh` → `.claude/hooks/pre-commit-secrets.sh`
 
-Register all hooks in `.claude/settings.json` (merge with existing if present) using the pattern in `${KNZINIT_ROOT}/scaffold/templates/settings.json.tmpl`. The template includes PreCompact, PostCompact, SessionStart (4 matchers), SessionEnd, Stop, and PreToolUse registrations.
+Register all hooks in `.claude/settings.json` (merge with existing if present) using the pattern in `${TRAILHEAD_ROOT}/scaffold/templates/settings.json.tmpl`. The template includes PreCompact, PostCompact, SessionStart (4 matchers), SessionEnd, Stop, and PreToolUse registrations.
 
 Make hook scripts executable with `chmod +x` (include hook-utils.sh for simplicity, even though it is sourced rather than executed directly).
 
@@ -161,7 +161,7 @@ Make hook scripts executable with `chmod +x` (include hook-utils.sh for simplici
 
 ### 3C: .gitignore (if git repo)
 
-Create a `.gitignore` based on `${KNZINIT_ROOT}/scaffold/templates/gitignore.tmpl` if one doesn't already exist.
+Create a `.gitignore` based on `${TRAILHEAD_ROOT}/scaffold/templates/gitignore.tmpl` if one doesn't already exist.
 
 If the stack is known, add the appropriate language/framework ignores (node_modules/, __pycache__/, target/, build/, dist/, etc.).
 
@@ -177,14 +177,14 @@ Ensure these directories exist:
 
 ## Step 4: Merge Settings
 
-The canonical template is at `${KNZINIT_ROOT}/scaffold/templates/settings.json.tmpl`. It represents the full code/unsure project variant.
+The canonical template is at `${TRAILHEAD_ROOT}/scaffold/templates/settings.json.tmpl`. It represents the full code/unsure project variant.
 
 **If `.claude/settings.json` already exists:** READ it first, then merge using these section-specific rules (merge-not-overwrite throughout):
 
 - **hooks**: Append new hook entries to existing hook event arrays. Never remove or overwrite existing hooks — add alongside them.
 - **permissions.deny**: Union of existing deny rules and template deny rules. No duplicates (match on `filePath` + `operations`).
 - **permissions.allow**: Union of existing allow rules and template allow rules. No duplicates (match on `command`).
-- **env**: Preserve all existing keys. Add new keys (`KNZINIT_PROJECT_TYPE`, `KNZINIT_VERSION`) only if not already present.
+- **env**: Preserve all existing keys. Add new keys (`TRAILHEAD_PROJECT_TYPE`, `TRAILHEAD_VERSION`) only if not already present.
 - **Scalar keys** (`$schema`, `plansDirectory`): Set if not already present; do not overwrite existing values.
 
 **MCP integration (conditional):** If `.mcp.json` was generated in Step 3A (user answered "yes" to external services), add `"enableAllProjectMcpServers": true` as a top-level scalar key in settings.json using the set-if-absent rule. If no .mcp.json was generated, do not add this key.
@@ -193,13 +193,13 @@ The canonical template is at `${KNZINIT_ROOT}/scaffold/templates/settings.json.t
 
 **Project-type adaptation:** After merging, apply these adjustments based on the project type from Step 1:
 
-- **Code or "not sure yet":** Use the template as-is. It already represents the code variant. Set `env.KNZINIT_PROJECT_TYPE` to `"code"` or `"unknown"` accordingly.
+- **Code or "not sure yet":** Use the template as-is. It already represents the code variant. Set `env.TRAILHEAD_PROJECT_TYPE` to `"code"` or `"unknown"` accordingly.
 - **Non-code:** Remove the entire `permissions.allow` array. Add two keys at the top level:
   - `"includeGitInstructions": false`
   - `"keep-coding-instructions": false`
-  - Set `env.KNZINIT_PROJECT_TYPE` to `"noncode"`.
+  - Set `env.TRAILHEAD_PROJECT_TYPE` to `"noncode"`.
 
-**All project types:** Substitute `{{VERSION}}` in `env.KNZINIT_VERSION` with the actual version from `plugin.json` (use `KNZINIT_VERSION` from `resolve-root.sh`). Set `env.KNZINIT_PROJECT_TYPE` to the normalized value: `code`, `noncode`, or `unknown`.
+**All project types:** Substitute `{{VERSION}}` in `env.TRAILHEAD_VERSION` with the actual version from `plugin.json` (use `TRAILHEAD_VERSION` from `resolve-root.sh`). Set `env.TRAILHEAD_PROJECT_TYPE` to the normalized value: `code`, `noncode`, or `unknown`.
 
 ## Step 5: Git Commit (if git repo)
 
