@@ -9,15 +9,22 @@ Run this to verify the project is in a clean, consistent state. This check adapt
 
 ## Behavior
 
-### 1. Code Health (skip if no code exists yet)
+### 1. Project Health
 
-Detect the project's toolchain and run whatever applies:
+**Detect project type:** Read `KNZINIT_PROJECT_TYPE` from `.claude/settings.json` env block. If missing or set to `code`/`unknown`, use code behavior. If set to `noncode`, use non-code behavior.
+
+**Code projects (code/unknown/missing):**
 - **Compilation/type check**: Run the project's build or type-check command
 - **Test suite**: Run tests if a test framework is configured
 - **Lint**: Run the linter if configured
 - **Debug artifacts**: Scan for console.log/print statements, TODO/FIXME/HACK comments, hardcoded localhost URLs, hardcoded file paths containing /Users/ or /home/
 
-If no build/test/lint commands are established yet, skip this section and note: "Code health checks will activate once build tooling is configured."
+If no build/test/lint commands are established yet, skip and note: "Code health checks will activate once build tooling is configured."
+
+**Non-code projects (noncode):**
+- **Deliverable Currency**: Are WIP deliverables referenced in STATE.md still active? Are open items still relevant?
+- **Work Stages accuracy**: Does the "Work Stages" section in CLAUDE.md reflect where things actually are?
+- **Stale references**: Are there references to completed or abandoned deliverables that should be archived?
 
 ### 2. Documentation Currency
 
@@ -25,7 +32,7 @@ Read and verify these files are current (check whichever exist):
 
 1. **`.planning/STATE.md`** — Does the current position match reality? Is the last activity date current?
 2. **`CLAUDE.md`** — Does it reflect the actual project state?
-3. **`.planning/LEARNINGS.md`** — Were recent insights captured?
+3. **Auto memory (MEMORY.md)** — Is it populated? Are entries relevant and not stale?
 
 If any are stale, update them now.
 
@@ -43,7 +50,7 @@ Output a summary table:
 
 | Check | Status | Issues |
 |-------|--------|--------|
-| Code Health | pass/skip/fail | ... |
+| Project Health | pass/skip/fail | ... |
 | Documentation | pass/fail | ... |
 | Context Handoff | pass/fail | ... |
 
