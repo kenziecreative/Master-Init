@@ -1,6 +1,10 @@
 # knzinit — Project Scaffolding Plugin
 
-A Claude Code plugin that bootstraps any new project with a two-system architecture (instruction + learning), session lifecycle hooks, and adaptive health checks. Works for code projects, non-code projects, or projects that haven't decided yet.
+A Claude Code plugin that bootstraps any new project — code, non-code, or undecided — with the files and automation needed to keep Claude effective across sessions.
+
+It scaffolds two systems that work together: an **instruction system** (CLAUDE.md, rules files) that tells Claude how to behave in this project, and a **learning system** (STATE.md, auto-memory) that tracks what's happening so context survives between sessions. The instruction system is static and human-curated; the learning system evolves every session.
+
+On top of that foundation, knzinit installs **session lifecycle hooks** — shell scripts that fire automatically when sessions start, end, or lose context to compaction, so Claude always picks up where it left off without the user re-explaining anything. It also includes an **adaptive health check** that only tests what actually exists in the project (build, tests, docs, security) and skips everything else, so it's safe to run from day one.
 
 ## Plugin Structure
 
