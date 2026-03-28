@@ -113,10 +113,11 @@ Plans:
   7. resolve-root.sh fallback paths and SKILL.md documentation are aligned
   8. pre-commit-secrets.sh comment accurately describes its trigger behavior
   9. mcp.json.tmpl uses a version marker format consistent with all other templates
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — TBD
+- [ ] 06-01-PLAN.md — README.md rewrite for v2 two-system architecture (INT-01)
+- [ ] 06-02-PLAN.md — SKILL.md instruction gaps + template polish fixes (INT-02 through INT-09, FLOW-B, FLOW-C)
 
 ## Progress
 
@@ -130,4 +131,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Hooks | 3/3 | Complete | 2026-03-27 |
 | 4. Non-Code and Skills | 3/3 | Complete | 2026-03-28 |
 | 5. Infrastructure | 1/1 | Complete | 2026-03-28 |
-| 6. Audit Gap Closure | 0/? | Pending | - |
+| 6. Audit Gap Closure | 0/2 | Pending | - |
