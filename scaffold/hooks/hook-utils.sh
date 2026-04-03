@@ -65,6 +65,21 @@ read_state_field() {
   echo "$content"
 }
 
+# append_audit_entry <action> <result> <detail>
+# Appends a timestamped entry to the security audit log at .planning/security/audit-log.md.
+# Creates the directory and file with header if they do not exist.
+append_audit_entry() {
+  local action="$1" result="$2" detail="$3"
+  local timestamp
+  timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  local audit_file="$PROJECT_DIR/.planning/security/audit-log.md"
+  mkdir -p "$(dirname "$audit_file")"
+  if [ ! -f "$audit_file" ]; then
+    printf '# Security Audit Log\n\n| Timestamp | Action | Result | Detail |\n|-----------|--------|--------|--------|\n' > "$audit_file"
+  fi
+  echo "| $timestamp | $action | $result | $detail |" >> "$audit_file"
+}
+
 # Usage in hook scripts:
 #   source "$(dirname "$0")/hook-utils.sh"
 #   trap 'log_error "hook-name" "$BASH_COMMAND failed (line $LINENO)"; exit 0' ERR

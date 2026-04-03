@@ -107,17 +107,18 @@ By the time trailhead runs, the product is defined and designed. trailhead scaff
 
 ### `/trailhead` — Project Bootstrap
 
-The main skill. Walks the user through orientation questions, explores what already exists in the project, then creates the full scaffolding adapted to the project type. Invoked manually when starting a new project.
+The main skill. Walks the user through orientation questions — including project type, external services, and **complexity level** (Lean, Durable, Extensible, or Multi-Agent) — explores what already exists, then creates the full scaffolding adapted to both project type and complexity. Invoked manually when starting a new project.
 
 ### `/sanity-check` — Project Health Check
 
-An adaptive health check that only checks what exists — safe to run on brand new projects. Tool-restricted to read-only operations so it can't accidentally modify your project while inspecting it.
+An adaptive health check that only checks what exists — safe to run on brand new projects. Tool-restricted to read-only operations so it can't accidentally modify your project while inspecting it. Adapts to both project type and complexity level.
 
-- **Code Health**: Runs build/type-check, test suite, linter, and scans for debug artifacts (console.log/print, TODO/FIXME/HACK, hardcoded localhost, hardcoded user paths). Skipped if no code exists yet.
-- **Documentation Currency**: Verifies STATE.md and CLAUDE.md are current. Updates stale files.
+- **Code Health**: Runs build/type-check, test suite, linter, and scans for debug artifacts. Skipped if no code exists yet.
+- **Documentation Currency**: Verifies STATE.md and CLAUDE.md are current.
 - **Context Handoff**: Validates that a fresh session could pick up where this one left off.
+- **Complexity-Specific Checks** (Durable+): Verifies workflow state tracking, checks for stuck steps, validates evaluation plan progress, and confirms integration points are documented.
 
-Output is a pass/skip/fail summary table. If anything fails, it fixes the issues before proceeding.
+Output uses a **findings-first format** — findings sorted by severity (critical/warning/info) with impact explanation and concrete fix direction. Ends with a summary count.
 
 **When to run**: Before clearing context, before starting a new milestone, after significant refactoring, or when something feels off.
 
@@ -153,7 +154,7 @@ Files that evolve as the project progresses. Updated each session.
 
 | File | Purpose | Loaded |
 |------|---------|--------|
-| `.planning/STATE.md` | Current position, recent decisions, open items, session continuity | At session start |
+| `.planning/STATE.md` | Current position, session context, workflow state (Durable+), evaluation plan, decisions, session continuity | At session start |
 | Auto Memory (`MEMORY.md`) | User preferences, project context, feedback, external references | On relevance |
 | `.planning/decisions-archive.md` | Historical decisions moved out of STATE.md when it gets long | On demand |
 
@@ -162,14 +163,14 @@ Files that evolve as the project progresses. Updated each session.
 #### Security Scanner → `.claude/agents/security-scanner.md`
 - **Model**: Sonnet
 - **What it does**: SAST-lite code review for injection flaws, OWASP Top 10, and cryptographic weaknesses. Runs the project's package manager audit command for dependency scanning. Validates security headers, cookie settings, TLS, and auth configuration.
-- **Output**: `.planning/security/security-scan-<date>.md`
+- **Output**: `.planning/security/security-scan-<date>.md` + summary entry in `audit-log.md`
 - **Pass/Fail**: Fails on any Critical finding or any High with a known public exploit.
 - **Adapts to**: The project's actual language and framework. Generic until the stack is established.
 
 #### Secrets & Environment Auditor → `.claude/agents/secrets-env-auditor.md`
 - **Model**: Haiku
 - **What it does**: Detects API keys, tokens, credentials, and high-entropy strings. Validates `.env.example` completeness. Checks that `.env` files are gitignored. Scans git history (last 50 commits) for previously committed secrets.
-- **Output**: `.planning/security/secrets-audit-<date>.md`
+- **Output**: `.planning/security/secrets-audit-<date>.md` + summary entry in `audit-log.md`
 - **Critical rule**: Never prints full secret values — always masks them.
 - **Adapts to**: Language-specific env var patterns (process.env, os.environ, os.Getenv, etc.).
 
@@ -179,7 +180,7 @@ All hooks are installed into `.claude/hooks/` in the target project. Universal h
 
 #### Universal Hooks (all projects)
 
-**hook-utils.sh** — Shared utility library sourced by all other hooks. Not executed directly.
+**hook-utils.sh** — Shared utility library sourced by all other hooks. Not executed directly. Provides `log_error`, `is_git_project`, `read_state_field`, and `append_audit_entry` (writes structured entries to `.planning/security/audit-log.md`).
 
 **session-start.sh** — Event: SessionStart (4 matchers: startup, resume, clear, compact)
 Reads STATE.md and outputs an orientation summary at the start of each session. Handles four variants: fresh start, resume, context clear, and post-compact recovery.
@@ -199,11 +200,13 @@ Restores orientation after context compression by re-reading STATE.md and output
 Looks at commits from the last 30 minutes. If they match milestone-like patterns (complete, finish, implement, ship, release, phase, v1, etc.), checks whether STATE.md was updated. Blocks with exit code 2 if not.
 
 **pre-commit-secrets.sh** — Event: PreToolUse (Bash tool, git commit commands)
-Scans staged files for common secret patterns — Stripe keys (sk_live_, sk_test_), AWS access keys (AKIA), GitHub tokens (ghp_), GitLab tokens (glpat-), Slack tokens (xox), private key blocks, and JWT patterns. Skips binary files.
+Scans staged files for common secret patterns — Stripe keys (sk_live_, sk_test_), AWS access keys (AKIA), GitHub tokens (ghp_), GitLab tokens (glpat-), Slack tokens (xox), private key blocks, and JWT patterns. Skips binary files. Logs pass/block results to the security audit trail.
 
 ## Adaptive Behavior
 
-trailhead adapts to four combinations of project type and git status:
+trailhead adapts along two axes: **project type** (what kind of infrastructure) and **complexity level** (how much infrastructure).
+
+### By Project Type
 
 | Project Type | Instruction System | Learning System | Hooks | Security | Skills |
 |-------------|-------------------|-----------------|-------|----------|--------|
@@ -213,6 +216,17 @@ trailhead adapts to four combinations of project type and git status:
 | **Non-code, no Git** | CLAUDE.md + rules (non-code variant) | STATE.md + auto memory | Session hooks only | Skipped | All skills (non-code sanity check) |
 
 When the project type is "not sure yet", trailhead builds the flexible variant (code pattern) that self-activates as the stack is established.
+
+### By Complexity Level
+
+| Level | STATE.md | Sanity Check | Best For |
+|-------|----------|-------------|----------|
+| **Lean** | Session context + eval plan | Standard checks | Short tasks, request-response work |
+| **Durable** | + Workflow State table, idempotency guidance, failure recovery | + Stuck step detection, workflow consistency | Multi-session work, approvals, retries |
+| **Extensible** | Same as Durable | + Integration point validation, MCP consistency | Multiple integrations or teams |
+| **Multi-Agent** | Same as Durable | + Agent coordination checks | Agent coordination workloads |
+
+Default is Lean. Complexity level is stored in `TRAILHEAD_COMPLEXITY_LEVEL` in `.claude/settings.json` and can be changed at any time.
 
 ## Extending
 

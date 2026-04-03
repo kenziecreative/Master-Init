@@ -58,3 +58,5 @@ Write report to `.planning/security/secrets-audit-{{DATE}}.md` with:
 2. Findings table (severity, file:line, pattern matched, masked value, recommendation)
 3. Environment hygiene assessment
 4. Git history check results
+
+Also append a summary entry to `.planning/security/audit-log.md` with the audit date, clean/findings result, and finding counts.

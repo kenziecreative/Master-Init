@@ -11,31 +11,34 @@ Capture what happened this session so the next session (or a different context w
 
 ## What to Capture
 
-Write a **4-section structured summary** to the `## Session Continuity` section of `.planning/STATE.md`:
+Update these sections in `.planning/STATE.md`:
 
-### 1. What was done this session
-List completed work -- decisions made, files created/modified, problems solved. Be specific (file names, not "updated some files").
+### 1. Session Context (`## Session Context`)
+Update with current active task, open questions, and what's being waited on. This is ephemeral — it reflects the conversation state right now.
 
-### 2. What's in progress
-Anything started but not finished. Include enough context that the next session can continue without re-reading all the code.
+### 2. What was done (`## Session Continuity`)
+Write a structured summary with: completed work (be specific — file names, not "updated some files"), what's in progress, immediate next steps, and open questions/blockers.
 
-### 3. What's next
-Immediate next steps. Prioritize -- what should the next session tackle first?
+### 3. Workflow State (`## Workflow State`, if present)
+If the project has a Workflow State table (Durable+ complexity), update step statuses: mark completed steps, note any steps that moved to `waiting` or `failed`. If this section doesn't exist (Lean projects), skip — the Session Continuity summary is sufficient.
 
-### 4. Open questions/blockers
-Unresolved questions, things waiting on user input, external dependencies, or known issues discovered this session.
+### 4. Supporting updates
+- Update `## Current Position` to reflect where things actually are
+- Update `## Last Activity` with today's date and a brief description
+- Append any decisions made this session to `## Recent Decisions`
+- Move persistent blockers to `## Open Items` (not just Session Continuity)
 
 ## How to Write It
 
 1. Read the current `.planning/STATE.md`
-2. Replace the content under `## Session Continuity` with the 4-section summary above
-3. Also update `## Current Position` to reflect where things actually are
-4. Also update `## Last Activity` with today's date and a brief description
-5. If any decisions were made this session, append them to the `## Recent Decisions` table
+2. Update `## Session Context` with current conversation state
+3. Replace the content under `## Session Continuity` with the done/in-progress/next/blockers summary
+4. If `## Workflow State` exists, update step statuses in the table
+5. Update `## Current Position`, `## Last Activity`, and `## Recent Decisions`
 
 **Keep it concise.** Each section: 2-5 bullet points. The goal is orientation, not a full session transcript.
 
-**Works for all project types** -- code, non-code, unknown. The 4-section structure is universal.
+**Works for all project types and complexity levels.** Lean projects skip the Workflow State table. Everything else is universal.
 
 ## When to Run
 

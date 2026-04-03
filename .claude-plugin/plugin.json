@@ -1,14 +1,10 @@
 {
   "name": "trailhead",
   "description": "Bootstrap projects with two-system architecture (instruction + learning), security agents, guardrail hooks, and sanity checks",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Kelsey Ruger",
     "email": "kelsey@kenziecreative.com"
   },
-  "repository": "https://github.com/kenziecreative/trailhead",
-  "license": "MIT",
-  "keywords": ["scaffolding", "session-lifecycle", "project-bootstrap", "non-code"],
-  "skills": "./skills/",
-  "agents": "./scaffold/agents/"
+  "skills": "./skills/"
 }

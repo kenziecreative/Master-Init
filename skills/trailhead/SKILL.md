@@ -11,12 +11,19 @@ You are setting up the standard project infrastructure for a new project. This s
 
 ## Step 1: Orientation
 
-Ask the user these four questions. **All four accept "not sure yet" as a valid answer.** Do not force the user down a path — if they don't know, build a flexible foundation that works either way.
+Ask the user these five questions. **All five accept "not sure yet" as a valid answer.** Do not force the user down a path — if they don't know, build a flexible foundation that works either way.
 
 1. **What is this project?** (Even a vague idea is fine. "I'm exploring an idea" is a valid answer.)
 2. **Is this a code project, a non-code project, or not sure yet?**
 3. **Is this already a git repository?** (Check with `git status` first — if it is, tell them and skip the question. If not, ask if they'd like you to initialize one.)
 4. **Does this project use external services (APIs, databases, Slack, etc.)?** (Yes, no, or not sure yet.)
+5. **How complex is this project's workflow?** (Pick the closest fit, or "not sure yet"):
+   - **Lean** — Short tasks, mostly request-response. One session usually finishes a unit of work.
+   - **Durable** — Work spans sessions, needs approvals or retries, has side effects worth tracking.
+   - **Extensible** — Multiple integrations or teams plugging into the same system.
+   - **Multi-Agent** — Coordination between agents or parallel workstreams.
+
+If the user says "not sure yet" to Q5, default to **Lean** and note in STATE.md that complexity level can be upgraded later via `TRAILHEAD_COMPLEXITY_LEVEL` in `.claude/settings.json`.
 
 Wait for answers before proceeding.
 
@@ -84,6 +91,13 @@ If CLAUDE.md doesn't exist, create it from `${TRAILHEAD_ROOT}/scaffold/templates
 - For **non-code** projects: include only `<!-- IF noncode -->` sections, strip all conditional markers
 - The conditional markers themselves must NOT appear in the generated output
 
+**Template adaptation for complexity level:** Templates also use `<!-- IF durable+ -->`, `<!-- IF extensible+ -->`, and `<!-- IF multi-agent -->` markers. The `+` suffix means "this level and above":
+- `<!-- IF durable+ -->` → include for **durable**, **extensible**, and **multi-agent** projects
+- `<!-- IF extensible+ -->` → include for **extensible** and **multi-agent** projects
+- `<!-- IF multi-agent -->` → include only for **multi-agent** projects
+- **Lean** projects: strip all complexity-conditional sections
+- These work alongside the code/noncode conditionals — both sets are evaluated independently
+
 For non-code projects, populate the Work Stages and Session Patterns sections using answers from Step 1B. If the user said "not sure yet" to those questions, keep the template placeholder comments.
 
 - What the project is (use the user's description, however vague)
@@ -112,11 +126,14 @@ Create from `${TRAILHEAD_ROOT}/scaffold/templates/STATE.md.tmpl` with:
 
 - Current position (if new project: "Project initialized. No work completed yet.")
 - Last activity date (today)
+- Session Context section (ephemeral conversation state)
 - Recent Decisions table (max 20 entries, with note to archive older ones to `.planning/decisions-archive.md`)
 - Open items / pending questions
-- Session Continuity section
+- Workflow State section (Durable+ only — includes step tracking table and status vocabulary)
+- Evaluation Plan section (all levels — golden task placeholders; Durable+ adds failure recovery placeholders)
+- Session Continuity section (handoff target)
 
-Target: under 60 lines.
+Apply both code/noncode and complexity-level conditionals when generating. Target: ~45 lines for Lean, ~65 lines for Durable+.
 
 **decisions-archive.md** — Create from `${TRAILHEAD_ROOT}/scaffold/templates/decisions-archive.md.tmpl` in `.planning/decisions-archive.md`. Scaffolded for every project. Substitute `{{VERSION}}` with the current version.
 
@@ -201,7 +218,7 @@ The canonical template is at `${TRAILHEAD_ROOT}/scaffold/templates/settings.json
   - `"keep-coding-instructions": false`
   - Set `env.TRAILHEAD_PROJECT_TYPE` to `"noncode"`.
 
-**All project types:** Substitute `{{VERSION}}` in `env.TRAILHEAD_VERSION` with the actual version from `plugin.json` (use `TRAILHEAD_VERSION` from `resolve-root.sh`). Set `env.TRAILHEAD_PROJECT_TYPE` to the normalized value: `code`, `noncode`, or `unknown`.
+**All project types:** Substitute `{{VERSION}}` in `env.TRAILHEAD_VERSION` with the actual version from `plugin.json` (use `TRAILHEAD_VERSION` from `resolve-root.sh`). Set `env.TRAILHEAD_PROJECT_TYPE` to the normalized value: `code`, `noncode`, or `unknown`. Set `env.TRAILHEAD_COMPLEXITY_LEVEL` to the normalized value from Q5: `lean`, `durable`, `extensible`, or `multi-agent`.
 
 ## Step 5: Git Commit (if git repo)
 
@@ -213,7 +230,7 @@ chore: bootstrap project scaffolding (memory, security, sanity checks)
 
 ## Step 6: Report
 
-Tell the user what was created and what was adapted. Be specific:
+Tell the user what was created and what was adapted. Report the detected complexity level and what it determined (e.g., "Complexity: **Durable** — scaffolded workflow state tracking and durability patterns"). Be specific:
 
 - List every file created, including `.planning/decisions-archive.md` (always created) and `.mcp.json` (if created — note it was generated because user indicated external services)
 - Note what was skipped and why
@@ -237,3 +254,11 @@ If the project type was **non-code**, add:
 If the project type was "not sure yet", add:
 
 > **When the project takes shape:** Once you know the language/framework, update the security scanner's dependency scanning, the secrets auditor's env var patterns, and the sanity check's build commands. The scaffolding will keep working in the meantime — it just won't check code-specific things until those are configured.
+
+If the complexity level was **Durable** or higher, add:
+
+> **Workflow state tracking enabled.** STATE.md includes a Workflow State section for tracking multi-session work steps. Update step statuses after each meaningful state change. See the status vocabulary in STATE.md.
+
+If the complexity level was **Lean**, add:
+
+> **Complexity: Lean.** If this project grows to need multi-session workflow tracking, approvals, or retry patterns, update `TRAILHEAD_COMPLEXITY_LEVEL` to `durable` in `.claude/settings.json` and re-run `/sanity-check` for upgraded checks.

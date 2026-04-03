@@ -40,6 +40,14 @@ save a short index entry per topic and expand only when needed. Prefer
 `.planning/STATE.md` for critical project state — STATE.md is shared via git,
 auto memory is machine-local and not visible to collaborators.
 
+**Provenance:** When saving a memory entry, include context so future sessions
+can judge whether it's still accurate:
+- **source:** where this came from (user-stated, observed-in-code, inferred, external-doc)
+- **trust:** high (user explicitly said it) | medium (observed pattern) | low (model inference)
+- **validated:** date last confirmed accurate
+
+Example: `[source:user-stated, trust:high, validated:{{DATE}}] Project uses PostgreSQL`
+
 Note: `autoMemoryDirectory` and `autoMode` must be set in user or local settings,
 not project settings (`.claude/settings.json`). Project settings are shared via git
 and cannot safely carry machine-specific paths.

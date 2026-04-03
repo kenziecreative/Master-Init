@@ -49,6 +49,10 @@ Check for:
 
 Write report to `.planning/security/security-scan-{{DATE}}.md` with:
 
+Also append a summary entry to `.planning/security/audit-log.md` with the scan date, pass/fail result, and finding counts by severity.
+
+Report contents:
+
 1. Executive summary (pass/fail + counts by severity)
 2. Findings table (severity, category, file:line, description, recommendation)
 3. Dependency audit results

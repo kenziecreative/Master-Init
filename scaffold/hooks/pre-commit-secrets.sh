@@ -29,8 +29,13 @@ while IFS= read -r file; do
   fi
 done <<< "$STAGED_FILES"
 
+FILE_COUNT=$(echo "$STAGED_FILES" | wc -l | tr -d ' ')
+
 if [ "$FOUND_SECRETS" -eq 1 ]; then
+  append_audit_entry "pre-commit-secrets" "BLOCKED" "Potential secret in staged files"
   echo "SECRETS CHECK FAILED: Review flagged files before committing. Remove secrets or add to .gitignore." >&2
   exit 2
 fi
+
+append_audit_entry "pre-commit-secrets" "PASS" "Scanned $FILE_COUNT staged files"
 exit 0

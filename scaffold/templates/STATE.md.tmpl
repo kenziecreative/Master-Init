@@ -8,6 +8,13 @@ Project initialized. No work completed yet.
 
 {{DATE}}
 
+## Session Context
+
+<!-- Ephemeral: what's happening in the current conversation -->
+- Active task: none yet
+- Open questions: none yet
+- Waiting on: nothing
+
 ## Recent Decisions
 
 | # | Decision | Date | Context |
@@ -28,6 +35,29 @@ Project initialized. No work completed yet.
 - [ ] Define deliverables and quality bar
 - [ ] Map recurring decisions
 - [ ] Document typical session workflow
+<!-- ENDIF -->
+
+<!-- IF durable+ -->
+## Workflow State
+
+<!-- Durable: tracks work steps that span sessions. Update after each meaningful state change. -->
+
+| Step | Status | Last Updated | Notes |
+|------|--------|-------------|-------|
+
+**Status values:** `planned` · `executing` · `waiting` · `completed` · `failed`
+
+Before retrying a failed step, check if its side effects already landed. Use the Recent Decisions table to confirm what was completed.
+<!-- ENDIF -->
+
+## Evaluation Plan
+
+<!-- Golden tasks: 3-5 things this system must do correctly. Define after project scope is clear. -->
+- [ ] (define golden tasks once scope is established)
+
+<!-- IF durable+ -->
+<!-- Failure recovery: what happens when a step fails mid-way? -->
+- [ ] (define recovery scenarios as workflow takes shape)
 <!-- ENDIF -->
 
 ## Session Continuity
